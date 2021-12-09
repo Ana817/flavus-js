@@ -1,0 +1,29 @@
+{
+    "prefix": "!",
+    
+    "status": {
+       "text": "crashing",
+       "type": "PLAYING",
+       "url": "https://twitch.tv/#"
+    },
+    "clientsettings": {
+       "nodes": [
+          {
+            "host": "localhost",
+            "port": 2333,
+            "password": "justsomepass"
+          }
+       ]
+    },
+ 
+    "spotify": {
+       "clientID": "",
+       "clientSecret": ""
+    },
+
+    "backupnode": {
+       "host": "lavalink.eu",
+       "port": 2333,
+       "password": "Raccoon"
+    }
+ }
