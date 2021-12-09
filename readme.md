@@ -61,7 +61,7 @@ You can then modify the settings in the configuration file located in `config` f
 # Credits
 Currently most of code in this project is coming from **[discord-js-lavalink-Music-Bot-erela-js](https://github.com/Tomato6966/discord-js-lavalink-Music-Bot-erela-js)** coded by **[Tomato#6966](https://github.com/Tomato6966)**.
 
-##TODO:
+## TODO
 - [ ] Add more commands
 - [ ] Add option to create and save playlists
 - [ ] Disconnect from voice channel when its empty
