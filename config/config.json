@@ -19,11 +19,5 @@
     "spotify": {
        "clientID": "",
        "clientSecret": ""
-    },
-
-    "backupnode": {
-       "host": "lavalink.eu",
-       "port": 2333,
-       "password": "Raccoon"
     }
  }
