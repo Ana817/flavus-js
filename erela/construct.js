@@ -5,11 +5,11 @@ var {
   var Facebook = require("erela.js-facebook");
   var config = require(`${process.cwd()}/config/config.json`);
   
-  clientID = process.env.clientID || config.spotify.clientID,
-    clientSecret = process.env.clientSecret || config.spotify.clientSecret;
+  clientID = process.env.clientID,
+  clientSecret = process.env.clientSecret;
   module.exports = (client) => {
     client.manager = new Manager({
-    nodes: config.clientsettings.nodes,
+    nodes: config.lavalink.nodes,
     plugins: [
         new Spotify({
         clientID,

@@ -36,6 +36,7 @@ client.toTime = toTime;
 
 client.config = config;
 client.clog = clog
+client.ee = config.visuals.embed
 client.clog('Initializing...'.def);
 
 //Raise max listeners from default of 10 to 25

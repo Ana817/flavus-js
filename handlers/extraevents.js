@@ -1,9 +1,3 @@
-const {
-  MessageEmbed,
-  Permissions
-} = require("discord.js");
-const settings = require(`${process.cwd()}/config/settings.json`);
-const moment = require("moment");
 module.exports = client => {
 
   process.on('unhandledRejection', (reason, p) => {
@@ -34,19 +28,5 @@ module.exports = client => {
     console.log(type, promise, reason);
     console.log('=== multiple Resolves ===\n\n\n\n\n'.toUpperCase().yellow.dim);
   });
-
-  client.logger = (data) => {
-    if (!settings[`debug-logs`]) return;
-    let logstring = `${String(`L`+`a`+`v`+`a`+`-`+`M`+`u`+`s`+`i`+`c`+ ` Logs`).brightGreen}${` | `.grey}${`${moment().format("ddd DD-MM-YYYY HH:mm:ss.SSSS")}`.cyan}${` [::] `.magenta}`
-    if (typeof data == "string") {
-      console.log(logstring, data.split("\n").map(d => `${d}`.green).join(`\n${logstring} `))
-    } else if (typeof data == "object") {
-      console.log(logstring, JSON.stringify(data, null, 3).green)
-    } else if (typeof data == "boolean") {
-      console.log(logstring, String(data).cyan)
-    } else {
-      console.log(logstring, data)
-    }
-  };
 
 }

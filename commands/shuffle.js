@@ -1,6 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
-const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 
 module.exports = {
     name: "shuffle",
@@ -12,7 +10,7 @@ module.exports = {
         if (!message.member.voice.channel) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('You must be in a voice channel to use this command!') 
                 ]
             });
@@ -23,7 +21,5 @@ module.exports = {
         player.queue.shuffle();
         //return success message
         return message.react('🔀').catch((e) => {})
-        
-
     }
 }

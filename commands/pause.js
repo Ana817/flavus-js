@@ -1,6 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
-const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 
 module.exports = {
     name: "pause",
@@ -8,12 +6,12 @@ module.exports = {
     description: "Pause",
     usage: `none`,
     visible: true,
-    async execute(client, message, args) {
+    async execute(client, message) {
         //check if author is in a voice channel
         if (!message.member.voice.channel) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('You must be in a voice channel to use this command!') 
                 ]
             });
@@ -22,14 +20,14 @@ module.exports = {
         if (!player) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('I am not playing anything right now!') 
                 ]
             });
         } else if (!player.playing) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('I am already paused!') 
                 ]
             });

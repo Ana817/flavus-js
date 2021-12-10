@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
 const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 
 module.exports = {
@@ -12,7 +11,7 @@ module.exports = {
         if (!args[0])
         return message.reply({
             embeds: [new MessageEmbed()
-            .setColor(es.wrongcolor)
+            .setColor(client.ee.wrongcolor)
             .setTitle('No arguments provided!')
             ]
         });

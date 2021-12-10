@@ -1,8 +1,5 @@
-const Discord = require("discord.js")
-const ee = require(`${process.cwd()}/config/embed.json`)
-const {
-  MessageEmbed
-} = require("discord.js")
+const { MessageEmbed } = require("discord.js")
+
 module.exports = async (client, message, args, type) => {
   let method = type.includes(":") ? type.split(":") : Array(type)
   if (!message.guild) return;
@@ -15,7 +12,7 @@ module.exports = async (client, message, args, type) => {
   if (!permissions.has("CONNECT")) {
     return message.reply({
       embeds: [new MessageEmbed()
-        .setColor(ee.wrongcolor)
+        .setColor(client.ee.wrongcolor)
         .setTitle('I dont have the permission to connect to a voice channel!')
       ]
     }).catch((e) => console.log(String(e).grey));
@@ -24,7 +21,7 @@ module.exports = async (client, message, args, type) => {
   if (!permissions.has("SPEAK")) {
     return message.reply({
       embeds: [new MessageEmbed()
-        .setColor(ee.wrongcolor)
+        .setColor(client.ee.wrongcolor)
         .setTitle('I dont have the permission to speak in this voice channel!')
       ]
     }).catch((e) => console.log(String(e).grey));
@@ -42,12 +39,4 @@ module.exports = async (client, message, args, type) => {
     return client.clog('playermanager error!'.error)
     }
 }
-/**
- * @INFO
- * Bot Coded by Tomato#6966 | https://discord.gg/milrato
- * @INFO
- * Work for Milrato Development | https://milrato.eu
- * @INFO
- * Please mention him / Milrato Development, when using this Code!
- * @INFO
- */
+//Original code by Tomato#6966 | https://discord.gg/milrato

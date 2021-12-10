@@ -1,12 +1,11 @@
 {
     "prefix": "!",
-    
     "status": {
        "text": "crashing",
        "type": "PLAYING",
        "url": "https://twitch.tv/#"
     },
-    "clientsettings": {
+    "lavalink": {
        "nodes": [
           {
             "host": "localhost",
@@ -15,9 +14,19 @@
           }
        ]
     },
- 
-    "spotify": {
-       "clientID": "",
-       "clientSecret": ""
+    "visuals": {
+       "embed": {
+         "color": "#ffcc00",
+         "wrongcolor": "#FF0000",
+         "footertext": "LAVAXE",
+         "footericon": "XXX",
+         "progress_bar": {
+           "size": "12",
+           "block": "▬",
+           "empty": "▬",
+           "arrow": ":blue_circle:"
+         }
+       }
+
     }
  }

@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const { MessageActionRow, MessageButton } = require('discord.js');
-var ee = require(`${process.cwd()}/config/embed.json`)
 
 module.exports = {
     name: "watchtogether",
@@ -12,7 +11,7 @@ module.exports = {
         if (!message.member.voice.channel) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('You must be in a voice channel to use this command!') 
                 ]
             });
@@ -28,7 +27,7 @@ module.exports = {
                     );
     
                     const Embed = new MessageEmbed()
-                    .setColor(ee.color)
+                    .setColor(client.ee.color)
                     .setTitle('WatchTogether session created!') 
     
                 return message.channel.send({ embeds: [Embed], components: [row] });
@@ -45,7 +44,7 @@ module.exports = {
                     );
     
                     const Embed = new MessageEmbed()
-                    .setColor(ee.color)
+                    .setColor(client.ee.color)
                     .setTitle('WatchTogether session created!') 
     
                 return message.channel.send({ embeds: [Embed], components: [row] });

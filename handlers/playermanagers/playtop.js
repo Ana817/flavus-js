@@ -1,12 +1,5 @@
-var {
-  MessageEmbed
-} = require("discord.js")
+var { MessageEmbed } = require("discord.js")
 const Discord = require("discord.js");
-var ee = require(`${process.cwd()}/config/embed.json`)
-var config = require(`${process.cwd()}/config/config.json`)
-var {
-  format
-} = require(`${process.cwd()}/utils/functions`)
 
 module.exports = playtop;
 async function playtop(client, message, args, type) {
@@ -51,7 +44,7 @@ async function playtop(client, message, args, type) {
     if (!res.tracks[0]) {
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(ee.wrongcolor)
+          .setColor(client.ee.wrongcolor)
           .setTitle(String("Found nothing for: **`" + search).substr(0, 256 - 3) + "`**")
         ]
       }).catch(() => {}).then(msg => {
@@ -80,7 +73,7 @@ async function playtop(client, message, args, type) {
       var playembed = new MessageEmbed()
         .setTitle('Now Playing')
         .setDescription(`**[${res.tracks[0].title}](${res.tracks[0].uri})**`)
-        .setColor(ee.color)
+        .setColor(client.ee.color)
       message.channel.send({
         embeds: [playembed]
       })
@@ -105,7 +98,7 @@ async function playtop(client, message, args, type) {
     var playembed = new MessageEmbed()
     .setTitle('Queued')
     .setDescription(`**[${res.tracks[0].title}](${res.tracks[0].uri})**`)
-    .setColor(ee.color)
+    .setColor(client.ee.color)
     message.channel.send({
       embeds: [playembed]
     }).catch(() => {});
@@ -115,7 +108,7 @@ async function playtop(client, message, args, type) {
     if (!res.tracks[0]) {
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(ee.wrongcolor)
+          .setColor(client.ee.wrongcolor)
           .setTitle(String("Nothing found for: **`" + search).substr(0, 256 - 3) + "`**")
           .setDescription('No songs were found in the playlist.')
         ]
@@ -154,9 +147,9 @@ async function playtop(client, message, args, type) {
     }
     var time = 0;
     let playlistembed = new Discord.MessageEmbed()
-      .setColor(ee.color)
+      .setColor(client.ee.color)
       .setTitle(`Playlist  **\`${res.playlist.name}`.substr(0, 256 - 3) + "`**" + " added to the Queue")
-      .setURL(res.playlist.uri).setColor(ee.color)
+      .setURL(res.playlist.uri).setColor(client.ee.color)
     //timing for estimated time creation
     if (player.queue.size > 0) player.queue.map((track) => time += track.duration)
     time += player.queue.current.duration - player.position;

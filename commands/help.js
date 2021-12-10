@@ -20,7 +20,7 @@ module.exports = {
             }
         } else {
             const helpEmbed = new MessageEmbed()
-            .setColor('#0099ff')
+            .setColor(client.ee.color)
             .setTitle('HELP')
             .setDescription(`${client.config.prefix}help (cmd name), display the help for a specific command`)
 

@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
 const guildSettings = require('../models/guildSettings');
 
 module.exports = {
@@ -14,24 +13,22 @@ module.exports = {
         if (!player) {
             return message.channel.send({
                 embeds: [new MessageEmbed()
-                .setColor(ee.wrongcolor)
+                .setColor(client.ee.wrongcolor)
                 .setTitle('I am not playing anything right now!') 
                 ]
             });
         }
-
         if (!args[0])
         return message.channel.send({
             embeds: [new MessageEmbed()
-            .setColor(ee.color)
+            .setColor(client.ee.color)
             .setDescription(`Current volume is \`${player.volume}%\``)
             ]
         });
-
         if (Number(args[0]) <= 0 || Number(args[0]) > 150)
         return message.channel.send({
             embeds: [new MessageEmbed()
-            .setColor(ee.wrongcolor)
+            .setColor(client.ee.wrongcolor)
             .setTitle('Volume must be between 0 and 150!') 
             .setDescription(`Current volume is \`${player.volume}%\``)
             ]
@@ -39,7 +36,7 @@ module.exports = {
         if (isNaN(args[0]))
         return message.channel.send({
             embeds: [new MessageEmbed()
-            .setColor(ee.wrongcolor)
+            .setColor(client.ee.wrongcolor)
             .setTitle('Argument must be a number!')
             .setDescription(`Current volume is \`${player.volume}%\``)
             ]
@@ -49,7 +46,7 @@ module.exports = {
         embeds: [new MessageEmbed()
             .setTitle('Volume set!')
             .setDescription(`Current volume is \`${player.volume}%\``)
-            .setColor(ee.color)
+            .setColor(client.ee.color)
         ]
         });
         guildSettings.findOne({ guildID: player.options.guild }, (err, settings) => {

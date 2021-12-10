@@ -3,12 +3,7 @@ var {
   MessageActionRow,
   MessageSelectMenu
 } = require("discord.js")
-var ee = require(`${process.cwd()}/config/embed.json`)
-var {
-  format,
-  delay,
-  arrayMove
-} = require(`${process.cwd()}/utils/functions`)
+var { format } = require(`${process.cwd()}/utils/functions`)
 
 //function for searching songs
 async function search(client, message, args, type) {
@@ -51,7 +46,7 @@ async function search(client, message, args, type) {
       console.log(e.stack ? String(e.stack).grey : String(e).grey)
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(ee.wrongcolor)
+          .setColor(client.ee.wrongcolor)
           .setTitle(eval(client.la[ls]["handlers"]["playermanagers"]["search"]["variable1"]))
           .setDescription(eval(client.la[ls]["handlers"]["playermanagers"]["search"]["variable2"]))
         ]
@@ -99,7 +94,7 @@ async function search(client, message, args, type) {
         embeds: [
           new MessageEmbed()
           .setTitle(`Results for: **\`${search}`.substr(0, 256 - 3) + "`**")
-          .setColor(ee.color)
+          .setColor(client.ee.color)
           .setDescription(results)
         ],
         components: [
@@ -156,7 +151,7 @@ async function search(client, message, args, type) {
             var embed3 = new MessageEmbed()
               .setTitle(`Added ${toAddTracks.length > 1 ? `${toAddTracks.length} Tracks, with the first one beeing: `: ``}${track.title}`)
               .setDescription(`**Queued [${track.title}](${track.uri})**`)
-              .setColor(ee.color)
+              .setColor(client.ee.color)
               .addField("Duration: ", `\`${track.isStream ? "LIVE STREAM" : format(track.duration)}\``, true)
               .addField("Song By: ", `\`${track.author}\``, true)
             
@@ -179,7 +174,7 @@ async function search(client, message, args, type) {
     console.log(e.stack ? String(e.stack).grey : String(e).grey)
     return message.channel.send({
       embeds: [new MessageEmbed()
-        .setColor(ee.wrongcolor)
+        .setColor(client.ee.wrongcolor)
         .setTitle(String("Nothing found for: **`" + search).substr(0, 256 - 3) + "`**")
       ]
     }).catch(() => {}).then(msg => {

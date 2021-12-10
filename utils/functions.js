@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
+const config = require(`${process.cwd()}/config/config.json`)
+const ee = config.visuals.embed
 const toTime = require('to-time');
 
 module.exports.handlemsg = handlemsg;
@@ -223,15 +224,18 @@ function createQueueEmbed(player, index) {
     var indexes = [];
     var titles = [];
     var durations = [];
-    const loadindexes = tracks.map((track, index) => indexes.push(`${++index}`));
-    const loadtitles = tracks.map((track, index) => {
+    tracks.map((track, index) => {
+      //load indexes
+        indexes.push(`${++index}`)
+        //load titles
         let string = `${escapeRegex(track.title.substr(0, 60).replace(/\[/igu, "\\[").replace(/\]/igu, "\\]"))}`
         if (string.length > 37) {
             string = `${string.substr(0, 37)}...`
         }
         titles.push(string)
+        //load durations
+        durations.push(`${track.isStream ? `LIVE STREAM` : format(player.queue.current.duration).split(` | `)[0]}`)
     });
-    const loaddurations = tracks.map((track, index) => durations.push(`${track.isStream ? `LIVE STREAM` : format(player.queue.current.duration).split(` | `)[0]}`));
     let npstring = `${escapeRegex(tracks.current.title.substr(0, 60).replace(/\[/igu, "\\[").replace(/\]/igu, "\\]"))}`
     if (npstring.length > 37) {
         string = `**Now Playing - ` + `${npstring.substr(0, 37)}...**` + `\n${tracks.current.isStream ? `[:red_circle: LIVE STREAM]` : createBar(player)}\n`

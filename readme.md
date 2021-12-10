@@ -29,6 +29,8 @@ Create `.env` file or set your env variables as follows:
 token = <YOUR_DISCORD_BOT_TOKEN>
 owner = <OWNER_DISCORD_ID>
 MONGODB_SRV = <MONGODB_SRV>
+clientID = <SPOTIFY_CLIENT_ID>
+clientSecret = <SPOTIFY_CLIENT_SECRET>
 ```
 
 You can then modify the settings in the configuration file located in `config` folder `config.js`.
@@ -42,7 +44,7 @@ You can then modify the settings in the configuration file located in `config` f
        "type": "PLAYING",
        "url": "XXX"
     },
-    "clientsettings": {
+    "lavalink": {
        "nodes": [
           {
             "host": "localhost",
@@ -51,10 +53,20 @@ You can then modify the settings in the configuration file located in `config` f
           }
        ]
     },
- 
-    "spotify": {
-       "clientID": "XXX",
-       "clientSecret": "XXX"
+    "visuals": {
+       "embed": {
+         "color": "#ffcc00",
+         "wrongcolor": "#FF0000",
+         "footertext": "LAVAXE",
+         "footericon": "XXX",
+         "progress_bar": {
+           "size": "12",
+           "block": "▬",
+           "empty": "▬",
+           "arrow": ":blue_circle:"
+         }
+       }
+
     }
 }
 ```
@@ -66,6 +78,5 @@ Currently most of code in this project is coming from **[discord-js-lavalink-Mus
 - [ ] Add option to create and save playlists
 - [ ] Disconnect from voice channel when its empty
 - [ ] Rework all embeds
-- [ ] Unify config files
 - [ ] Clean up code
 

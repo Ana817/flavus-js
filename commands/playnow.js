@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
 const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 
 module.exports = {
@@ -13,7 +12,7 @@ module.exports = {
         if (!args[0])
         return message.reply({
             embeds: [new MessageEmbed()
-            .setColor(ee.wrongcolor)
+            .setColor(client.ee.wrongcolor)
             .setTitle('No arguments provided!') 
             ]
         });
@@ -23,6 +22,5 @@ module.exports = {
         //play from YOUTUBE
         playermanager(client, message, args, `playtop:youtube`);
         }
-
     }
 }

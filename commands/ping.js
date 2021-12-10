@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const ee = require(`${process.cwd()}/config/embed.json`)
 
 module.exports = {
     name: "ping",
@@ -10,7 +9,7 @@ module.exports = {
     async execute(client, message, args) {
         return message.channel.send({
             embeds: [new MessageEmbed()
-            .setColor(ee.wrongcolor)
+            .setColor(client.ee.wrongcolor)
             .setTitle(`\`\`\`Testing codeblock inside embed\nso this should do domething\`\`\``) 
             ]
         });
