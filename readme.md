@@ -11,7 +11,7 @@ My personal music bot powered by lavalink. Based on [discord.js](https://discord
 ### Lavalink server and MongoDB instance required
  If you dont want to host your own Lavalink use these settings in `./config/config.json`:
  ```json
-"clientsettings": {
+"lavalink": {
     "nodes": [
         {
         "host": "lavalink.eu",
