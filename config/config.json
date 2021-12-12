@@ -1,32 +1,31 @@
 {
-    "prefix": "!",
-    "status": {
-       "text": "crashing",
-       "type": "PLAYING",
-       "url": "https://twitch.tv/#"
-    },
-    "lavalink": {
-       "nodes": [
-          {
-            "host": "localhost",
-            "port": 2333,
-            "password": "justsomepass"
-          }
-       ]
-    },
-    "visuals": {
-       "embed": {
-         "color": "#ffcc00",
-         "wrongcolor": "#FF0000",
-         "footertext": "LAVAXE",
-         "footericon": "XXX",
-         "progress_bar": {
-           "size": "12",
-           "block": "▬",
-           "empty": "▬",
-           "arrow": ":blue_circle:"
-         }
-       }
-
+  "prefix": "!",
+  "status": {
+    "text": "crashing",
+    "type": "PLAYING",
+    "url": "https://twitch.tv/#"
+  },
+  "lavalink": {
+    "nodes": [
+      {
+        "host": "localhost",
+        "port": 2333,
+        "password": "justsomepass"
+      }
+    ]
+  },
+  "visuals": {
+    "embed": {
+      "color": "#ffcc00",
+      "wrongcolor": "#FF0000",
+      "footertext": "LAVAXE",
+      "footericon": "XXX",
+      "progress_bar": {
+        "size": "12",
+        "block": "▬",
+        "empty": "▬",
+        "arrow": ":blue_circle:"
+      }
     }
- }
+  }
+}

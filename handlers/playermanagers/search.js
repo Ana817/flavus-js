@@ -111,7 +111,9 @@ async function search(client, message, args, type) {
         if (menu.user.id === cmduser.id) {
           collector.stop();
           menu.deferUpdate();
-          if (menu.values[0] == "Cancel") {
+          //chek if any of menu.vaues is equal to cancel
+          if (menu.values.includes("Cancel")) {
+            await menumsg.delete().catch(() => {});
             return message.react('❌').catch((e) => {})
           }
           var picked_songs = [];

@@ -1,27 +1,22 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 
 module.exports = {
-    name: "play",
-    aliases: ["p"],
-    description: "Add a song to the queue",
-    usage: `none`,
-    visible: true,
-    async execute(client, message, args) {
-        //if no args return error
-        if (!args[0])
-        return message.reply({
-            embeds: [new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
-            .setTitle('No arguments provided!') 
-            ]
-        });
-        if (args.join("").includes("spotify")) {
-        playermanager(client, message, args, `song:raw`);
-        } else {
-        //play from YOUTUBE
-        playermanager(client, message, args, `song:youtube`);
-        }
-
+  name: "play",
+  aliases: ["p"],
+  description: "Add a song to the queue",
+  usage: `none`,
+  visible: true,
+  async execute(client, message, args) {
+    //if no args return error
+    if (!args[0])
+      return message.reply({
+        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("No arguments provided!")],
+      });
+    if (args.join("").includes("spotify")) {
+      playermanager(client, message, args, `song:raw`);
+    } else {
+      playermanager(client, message, args, `song:youtube`);
     }
-}
+  },
+};

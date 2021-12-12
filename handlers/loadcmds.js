@@ -1,39 +1,39 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const fs = require("fs");
 
 module.exports = (client) => {
+  try {
+    client.commands = new Discord.Collection();
+    client.aliases = new Discord.Collection();
+    client.info = new Discord.Collection();
 
-    try {
+    fs.readdir(`./commands/`, (error, files) => {
+      if (error) {
+        return client.clog("Error while trying to get the commmands!".error);
+      }
+      files.forEach((file) => {
+        try {
+          delete require.cache[require.resolve(`../commands/${file}`)];
+          const command = require(`../commands/${file}`);
+          const commandName = file.split(".")[0];
 
-        client.commands = new Discord.Collection();
-        client.aliases = new Discord.Collection()
-        client.info = new Discord.Collection();
+          if (!command.execute) return client.clog(`Command `.error + `${commandName}`.warn + ` has no execute function!`.error);
+          if (!command.name) return client.clog(`Command `.error + `${commandName}`.warn + ` has no name!`.error);
 
-        fs.readdir(`./commands/`, (error, files) => { 
-            if (error) {return client.clog("Error while trying to get the commmands!".error);};
-            files.forEach(file => {
-                try {
-                    delete require.cache[require.resolve(`../commands/${file}`)];
-                    const command = require(`../commands/${file}`);
-                    const commandName = file.split(".")[0];
+          client.commands.set(command.name, command);
 
-                    if (!command.execute) return client.clog(`Command `.error+`${commandName}`.warn+` has no execute function!`.error);
-                    if (!command.name) return client.clog(`Command `.error+`${commandName}`.warn+` has no name!`.error);
-            
-                    client.commands.set(command.name, command);
-            
-                    if (command.aliases) {
-                        command.aliases.forEach(alias => {
-                            client.aliases.set(alias, command);
-                        });
-                    };
-                } catch (e) {
-                    return client.clog(String(e.stack).error);
-                };
+          if (command.aliases) {
+            command.aliases.forEach((alias) => {
+              client.aliases.set(alias, command);
             });
-            client.clog(`${client.commands.size} commands loaded!`.log);
-        });
-    } catch (e) {
-        client.clog(String(e.stack).error);
-    }
-}
+          }
+        } catch (e) {
+          return client.clog(String(e.stack).error);
+        }
+      });
+      client.clog(`${client.commands.size} commands loaded!`.log);
+    });
+  } catch (e) {
+    client.clog(String(e.stack).error);
+  }
+};

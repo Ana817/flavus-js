@@ -3,7 +3,6 @@ const { MessageEmbed } = require("discord.js")
 module.exports = async (client, message, args, type) => {
   let method = type.includes(":") ? type.split(":") : Array(type)
   if (!message.guild) return;
-
   let {
     channel
   } = message.member.voice;

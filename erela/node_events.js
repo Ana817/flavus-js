@@ -1,7 +1,5 @@
 const { Player } = require("erela.js");
-var {
-  getVolume
-} = require(`${process.cwd()}/utils/mongo`)
+var { getVolume } = require(`${process.cwd()}/utils/mongo`);
 
 let started = false;
 module.exports = (client) => {
@@ -9,35 +7,34 @@ module.exports = (client) => {
     .on("nodeConnect", (node) => {
       if (!started) {
         started = true;
-        client.clog(`Node connected`.log+` - `.def+`${String(node.options.identifier).debug}`)
+        client.clog(`Node connected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
       }
       setTimeout(() => {
         started = false;
-      }, 2000)
+      }, 2000);
     })
     .on("nodeCreate", (node) => {
-      client.clog(`Node created`.log+` - `.def+`${String(node.options.identifier).debug}`)
+      client.clog(`Node created`.log + ` - `.def + `${String(node.options.identifier).debug}`);
     })
     .on("nodeReconnect", (node) => {
-      client.clog(`Node reconnecting`.log+` - `.def+`${String(node.options.identifier).debug}`)
+      client.clog(`Node reconnecting`.log + ` - `.def + `${String(node.options.identifier).debug}`);
     })
     .on("nodeDisconnect", (node) => {
-      if (!started) return
-      client.clog(`Node disconnected`.log+` - `.def+`${String(node.options.identifier).debug}`)
+      if (!started) return;
+      client.clog(`Node disconnected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
       setTimeout(() => {
         node.connect();
       }, 1000);
     })
     .on("nodeError", (node, error) => {
-      client.clog(`Node errored`.error+` - `.def+`${String(node.options.identifier).debug}`)
+      client.clog(`Node errored`.error + ` - `.def + `${String(node.options.identifier).debug}`);
       setTimeout(() => {
         node.connect();
       }, 1000);
     })
     .on("playerCreate", (player) => {
-      getVolume(player, client)
+      getVolume(player, client);
     });
-
 };
 /**
  * @INFO
