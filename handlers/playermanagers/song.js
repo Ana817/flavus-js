@@ -95,6 +95,7 @@ async function song(client, message, args, type) {
       var playembed = new MessageEmbed()
         .setTitle('Now Playing')
         .setDescription(`**[${res.tracks[0].title}](${res.tracks[0].uri})**`)
+        .setThumbnail(res.tracks[0].thumbnail)
         .setColor(client.ee.color)
       message.channel.send({
         embeds: [playembed]
@@ -111,6 +112,7 @@ async function song(client, message, args, type) {
         .setTitle('Queued')
         .setDescription(`**[${res.tracks[0].title}](${res.tracks[0].uri})**`)
         .setColor(client.ee.color)
+        .setThumbnail(res.tracks[0].thumbnail)
       message.channel.send({
         embeds: [playembed]
       })

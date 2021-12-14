@@ -1,5 +1,5 @@
 const { Player } = require("erela.js");
-var { getVolume } = require(`${process.cwd()}/utils/mongo`);
+var { getVolume, getAutoplay } = require(`${process.cwd()}/utils/mongo`);
 
 let started = false;
 module.exports = (client) => {
@@ -34,6 +34,15 @@ module.exports = (client) => {
     })
     .on("playerCreate", (player) => {
       getVolume(player, client);
+    })
+    .on("queueEnd", (player) => {
+      getAutoplay(player, client);
+    })
+    .on("trackStart", (player) => {
+      player.set(
+        `previousTrack`,
+        player.queue.current
+      );
     });
 };
 /**

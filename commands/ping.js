@@ -1,4 +1,6 @@
 const { MessageEmbed } = require("discord.js");
+const { MessageActionRow, MessageButton } = require("discord.js");
+var { autoplay } = require(`${process.cwd()}/utils/functions`);
 
 module.exports = {
   name: "ping",
@@ -6,15 +8,7 @@ module.exports = {
   description: "Debug",
   usage: `none`,
   visible: false,
-  async execute(client, message, args) {
-    return message.channel.send({
-      embeds: [
-        new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
-          .setTitle(
-            `\`\`\`Testing codeblock inside embed\nso this should do domething\`\`\``
-          ),
-      ],
-    });
+  async execute(client, message) {
+    return
   },
 };

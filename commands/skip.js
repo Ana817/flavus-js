@@ -53,6 +53,10 @@ module.exports = {
         }
       }
     }
+    player.set(
+      `previousTrack`,
+      player.queue.current
+    );
     //skip the track
     player.stop();
     //send success message

@@ -6,6 +6,10 @@ const guildSettings = Schema({
     type: Number,
     default: undefined,
   },
+  autoplay: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = model("guildSettings", guildSettings);

@@ -7,11 +7,12 @@
   },
   "lavalink": {
     "nodes": [
-      {
-        "host": "localhost",
-        "port": 2333,
-        "password": "justsomepass"
-      }
+        {
+        "host": "lavalink.devin-dev.xyz",
+        "port": 443,
+        "password": "lava123",
+        "secure": true
+        }
     ]
   },
   "visuals": {

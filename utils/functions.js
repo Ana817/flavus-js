@@ -14,6 +14,7 @@ module.exports.escapeRegex = escapeRegex;
 module.exports.arrayMove = arrayMove;
 module.exports.isValidURL = isValidURL;
 module.exports.createQueueEmbed = createQueueEmbed;
+module.exports.autoplay = autoplay;
 
 function handlemsg(txt, options) {
   let text = String(txt);
@@ -218,6 +219,49 @@ function nFormatter(num, digits = 2) {
   return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 }
 
+async function autoplay(client, player) {
+  try {
+    const previoustrack = player.get(`previousTrack`)
+    if (!previoustrack) return;
+    //client.clog(player.queue);
+
+    const mixURL = `https://www.youtube.com/watch?v=${previoustrack.identifier}&list=RD${previoustrack.identifier}`;
+    const response = await client.manager.search(mixURL, previoustrack.requester);
+    //if nothing is found, send error message, plus if there  is a delay for the empty QUEUE send error message TOO
+    if (!response || response.loadType === 'LOAD_FAILED' || response.loadType !== 'PLAYLIST_LOADED') {
+      const embed = new MessageEmbed()
+        .setTitle("Error")
+        .setDescription(`Couldn't add mix to queue!`)
+        .setColor(0xFF0000);
+      client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
+      return;
+    }
+    //remove every track from response.tracks that has the same identifier as the previous track
+    response.tracks = response.tracks.filter(track => track.identifier !== previoustrack.identifier);
+    //if there are no tracks left in the response, send error message
+    if (!response.tracks.length) {
+      const embed = new MessageEmbed()
+        .setTitle("Error")
+        .setDescription(`No similar tracks found!`)
+        .setColor(0xFF0000);
+      client.channels.cache.get(player.textChannel).send(embed).catch(() => { });
+      return;
+    }
+    let track = response.tracks[Math.floor(Math.random() * Math.floor(response.tracks.length))]
+    player.queue.add(track);
+    const embed = new MessageEmbed()
+      .setTitle("Autoplay")
+      .setDescription(`[${track.title}](${track.uri})`)
+      .setColor(ee.color)
+      .setThumbnail(track.thumbnail);
+    client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
+    return player.play();
+  } catch (e) {
+    console.log(String(e.stack).grey.bgRed)
+  }
+  return
+}
+
 function createQueueEmbed(player, index) {
   const tracks = player.queue;
   let queueLength
@@ -243,7 +287,7 @@ function createQueueEmbed(player, index) {
     }
     titles.push(string);
     //load durations
-    durations.push(`${track.isStream ? `LIVE STREAM` : format(player.queue.current.duration).split(` | `)[0]}`);
+    durations.push(`${track.isStream ? `LIVE STREAM` : format(track.duration).split(` | `)[0]}`);
   });
   let npstring = `${escapeRegex(tracks.current.title.substr(0, 60).replace(/\[/giu, "\\[").replace(/\]/giu, "\\]"))}`;
   if (npstring.length > 37) {
