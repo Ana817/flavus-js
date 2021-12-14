@@ -54,7 +54,7 @@ client.on("ready", () => {
 });
 
 client.on('messageCreate', async (msg) => {
-    if (msg.content.startsWith(client.config.prefix) && !msg.author.bot && msg.guild) { //check if the message starts with the prefix and if the message is not from a bot
+    if (msg.content.startsWith(process.env.prefix) && !msg.author.bot && msg.guild) { //check if the message starts with the prefix and if the message is not from a bot
         const args = msg.content.slice(config.prefix.length).split(" ");
         const command = args.shift().toLowerCase();
         const findcmd = client.commands.get(command) || client.aliases.get(command); //find command or alias
