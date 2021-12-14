@@ -5,8 +5,6 @@ var config = require(`${process.cwd()}/config/config.json`);
 
 (clientID = process.env.clientID), (clientSecret = process.env.clientSecret);
 module.exports = (client) => {
-  config.lavalink.nodes[0].port = Number(process.env.PORT) || config.lavalink.nodes[0].port
-  console.log(config.lavalink.nodes[0].port)
   client.manager = new Manager({
     nodes: config.lavalink.nodes,
     plugins: [
