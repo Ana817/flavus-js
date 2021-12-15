@@ -24,7 +24,7 @@ module.exports = {
         .setColor(client.ee.color)
         .setTitle("HELP")
         .setDescription(
-          `${client.config.prefix}help (cmd name), display the help for a specific command`
+          `${process.env.prefix}help (cmd name), display the help for a specific command`
         );
 
       for (let [key, value] of client.commands) {

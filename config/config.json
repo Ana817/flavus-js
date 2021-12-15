@@ -8,9 +8,9 @@
   "lavalink": {
     "nodes": [
         {
-        "host": "lavalink.devin-dev.xyz",
+        "host": "disbotlistlavalink.ml",
         "port": 443,
-        "password": "lava123",
+        "password": "LAVA",
         "secure": true
         }
     ]
