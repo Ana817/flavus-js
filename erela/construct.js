@@ -5,6 +5,7 @@ var config = require(`${process.cwd()}/config/config.json`);
 
 (clientID = process.env.clientID), (clientSecret = process.env.clientSecret);
 module.exports = (client) => {
+  config.lavalink.nodes[0].password = config.lavalink.nodes[0].password || process.env.lavasecret
   client.manager = new Manager({
     nodes: config.lavalink.nodes,
     plugins: [

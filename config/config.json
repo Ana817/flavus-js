@@ -8,9 +8,9 @@
   "lavalink": {
     "nodes": [
         {
-        "host": "disbotlistlavalink.ml",
+        "host": "lavalink-repl.moumirrai.repl.co",
         "port": 443,
-        "password": "LAVA",
+        "password": null,
         "secure": true
         }
     ]
