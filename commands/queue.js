@@ -8,7 +8,7 @@ module.exports = {
   description: "Shows queue and current track progress",
   visible: true,
   player: true,
-  async execute(client, message) {
+  async execute(client, message, args, player) {
     if (!player) {
       return message.channel.send({
         embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Queue is empty!")],

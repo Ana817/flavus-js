@@ -7,8 +7,7 @@ module.exports = {
   description: "Debug command",
   usage: `none`,
   visible: false,
-  player: true,
-  async execute(client, message, args, player) {
-    console.log(player)
+  async execute(client, message, args) {
+    return
   },
 };
