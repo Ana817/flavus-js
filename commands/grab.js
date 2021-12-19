@@ -3,21 +3,17 @@ var { format } = require(`${process.cwd()}/utils/functions`);
 
 module.exports = {
   name: "grab",
-  aliases: ["mine"],
-  description: "Sends current song to your DM",
-  usage: `none`,
-  visible: false,
-  async execute(client, message) {
-    var player = client.manager.players.get(message.guild.id);
-    if (!player || !player.queue.current) {
+  description: "Sends information about the current track to your DM",
+  visible: true,
+  player: true,
+  async execute(client, message , args, player) {
+    if (!player || !player.queue.current) { // if there is no player or no current track
       message.author.send({
         embeds: [new MessageEmbed()
           .setColor(client.ee.wrongcolor)
           .setTitle(`There is no song playing right now!`)
           .setTimestamp()
-          //set guild icon as footer
           .setFooter(`Requested in - ${message.guild.name}`, message.guild.iconURL())
-          //get guild avatar url
         ]
       });
       return message.delete().catch((e) => {});

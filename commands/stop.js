@@ -2,17 +2,10 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
   name: "stop",
-  aliases: ["stop"],
-  description: "Stops player",
-  usage: `none`,
+  description: "Stops player, clears queue and leaves voice channel",
   visible: true,
-  async execute(client, message) {
-    if (!message.member.voice.channel) {
-      return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You must be in a voice channel to use this command!")],
-      });
-    }
-    var player = client.manager.players.get(message.guild.id);
+  player: true,
+  async execute(client, message, args, player) {
     if (!player) {
       return message.channel.send({
         embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("I am not playing anything right now!")],

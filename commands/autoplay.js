@@ -2,21 +2,19 @@ const guildSettings = require("../models/guildSettings");
 
 module.exports = {
   name: "autoplay",
-  aliases: [],
   description: "Toggle autoplay",
-  usage: `none`,
   visible: true,
   async execute(client, message) {
-    guildSettings.findOne({ guildID: message.guild.id }, (err, settings) => {
-      if (err) return client.clog(err);
-      if (!settings) {
+    guildSettings.findOne({ guildID: message.guild.id }, (err, settings) => { // try to find the guild settings
+      if (err) return client.clog(err); // if there is an error, log it
+      if (!settings) { // if there are no settings, create them
         settings = new guildSettings({
           guildID: player.options.guild,
           autoplay: true,
         });
         settings.save().catch((err) => console.log(err));
         return message.react("👌").catch((e) => {});
-      } else {
+      } else { // if there are settings, toggle autoplay
         settings.autoplay = !settings.autoplay;
         settings.save().catch((err) => console.log(err));
         if (settings.autoplay) {

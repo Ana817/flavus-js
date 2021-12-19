@@ -1,15 +1,16 @@
 const Discord = require("discord.js");
+const { MessageEmbed } = require("discord.js");
+const { DiscordTogether } = require('discord-together');
 const colors = require("colors");
 const toTime = require('to-time');
-colors.setTheme({
-    def: 'grey',
-    log: 'brightGreen',
-    warn: 'yellow',
-    debug: 'brightBlue',
-    error: 'brightRed'
-});
-const fs = require("fs");
 const config = require("./config/config.json")
+colors.setTheme({
+  def: 'grey',
+  log: 'brightGreen',
+  warn: 'yellow',
+  debug: 'brightBlue',
+  error: 'brightRed'
+});
 const clog = require("./utils/logger.js");
 require('dotenv').config();
 
@@ -29,20 +30,21 @@ const client = new Discord.Client({
     status: "dnd"
   }
 });
-const { DiscordTogether } = require('discord-together');
-client.discordTogether = new DiscordTogether(client);
+// append some stuff to the client
+client.discordTogether = new DiscordTogether(client); // Discord Together
 client.toTime = toTime;
-
-
 client.config = config;
-client.clog = clog
 client.ee = config.visuals.embed
-client.clog('Initializing...'.def);
+client.clog = clog; // Logger
 
-//Raise max listeners from default of 10 to 25
-client.setMaxListeners(25);
+const prefix = process.env.PREFIX || config.prefix;
+
+client.setMaxListeners(25); // Max listeners
 require('events').defaultMaxListeners = 25;
 
+client.clog('Initializing...'.def);
+
+// load handlers
 Array(
   "loadcmds", "erela", "extraevents", "loadMongo"
 ).forEach(handler => {
@@ -54,18 +56,31 @@ client.on("ready", () => {
 });
 
 client.on('messageCreate', async (msg) => {
-    if (msg.content.startsWith(process.env.prefix) && !msg.author.bot && msg.guild) { //check if the message starts with the prefix and if the message is not from a bot
-        const args = msg.content.slice(config.prefix.length).split(" ");
+    if (msg.content.startsWith(prefix) && !msg.author.bot && msg.guild) { // check if the message starts with the prefix and if the message is not from a bot
+        const args = msg.content.slice(prefix.length).split(" ");
         const command = args.shift().toLowerCase();
         const findcmd = client.commands.get(command) || client.aliases.get(command); //find command or alias
         
         if (findcmd) {
-            findcmd.execute(client, msg, args);    
+            //if command requires autor to be in voice channel and he's not, return
+            if (findcmd.voice) {
+              if (!msg.member.voice.channel) {
+                return msg.channel.send({
+                  embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You must be in a voice channel to use this command!")],
+                });
+              }
+            }
+            //if command requires player, pass it to the command
+            if (findcmd.player) {
+              let player = client.manager.players.get(msg.guild.id)
+              findcmd.execute(client, msg, args, player) //execute the command with the player
+            } else {
+              findcmd.execute(client, msg, args); //execute the command
+            }
         }
     }
 });
 
-client.on("raw", (d) => client.manager.updateVoiceState(d));
+client.on("raw", (d) => client.manager.updateVoiceState(d)); // update voice state
 
-//login
 client.login(process.env.token || config.token);

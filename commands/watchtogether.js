@@ -5,7 +5,6 @@ module.exports = {
   name: "watchtogether",
   aliases: ["yt", "w2", "youtube"],
   description: "Strats a watchtogether session in your vc",
-  usage: `none`,
   visible: true,
   async execute(client, message, args) {
     if (!message.member.voice.channel) {

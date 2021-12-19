@@ -2,17 +2,15 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
   name: "unshuffle",
-  aliases: ["unshuffle"],
-  description: "Undo last shuffle",
-  usage: `none`,
+  description: "Undo last shuffle if available",
   visible: true,
-  async execute(client, message, args) {
-    if (!message.member.voice.channel) {
-      return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You must be in a voice channel to use this command!")],
+  voice: true,
+  player: true,
+  async execute(client, message, args, player) {
+    if (!player)
+      return message.reply({
+        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("Nothing is playing!")],
       });
-    }
-    var player = client.manager.players.get(message.guild.id);
     if (!player.get(`beforeshuffle`))
       return message.reply({
         embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You have not shuffled this queue!")],

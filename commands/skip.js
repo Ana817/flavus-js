@@ -4,18 +4,10 @@ module.exports = {
   name: "skip",
   aliases: ["s"],
   description: "Skips to next track",
-  usage: `none`,
   visible: true,
-  async execute(client, message, args) {
-    const { channel } = message.member.voice;
-    //if the member is not in a channel, return
-    if (!channel) {
-      return message.reply({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You are not in a voice channel!")],
-      });
-    }
-    var player = client.manager.players.get(message.guild.id);
-    //if no player available return aka not playing anything
+  voice: true,
+  player: true,
+  async execute(client, message, args, player) {
     if (!player) {
       if (message.guild.me.voice.channel) {
         message.reply({
@@ -27,10 +19,9 @@ module.exports = {
           embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("Im not playing anything!")],
         });
       }
-      return;
     }
-    //if not in the same channel as the player, return Error
-    if (channel.id !== player.voiceChannel)
+    //if not in the same channel as the player, return
+    if (message.member.voice.channel.id !== player.voiceChannel)
       return message.reply({
         embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("You are not in the same voice channel as me!")],
       });

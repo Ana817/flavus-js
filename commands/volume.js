@@ -4,11 +4,12 @@ const guildSettings = require("../models/guildSettings");
 module.exports = {
   name: "volume",
   aliases: ["v"],
-  description: "Sets volume",
-  usage: `none`,
+  description: "Sets volume or shows current volume if no argument is given.\nVolume must be between **0** and **150**!",
+  usage: `\`<prefix>volume <number>\` or \`<prefix>v\``,
   visible: true,
-  async execute(client, message, args) {
-    var player = client.manager.players.get(message.guild.id);
+  voice: true,
+  player: true,
+  async execute(client, message, args, player) {
     if (!player) {
       return message.channel.send({
         embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("I am not playing anything right now!")],

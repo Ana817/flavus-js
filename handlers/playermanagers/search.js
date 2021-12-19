@@ -127,7 +127,6 @@ async function search(client, message, args, type) {
           menumsg.edit({
             embeds: [menumsg.embeds[0].setTitle(`Picked Songs:`).setDescription(picked_songs.join("\n\n"))],
             components: [],
-            content: `${collected && collected.first() && collected.first().values ? `**Selected: \`${collected ? collected.map(s => s.value).join(", ") : "Nothing"}\`**` : "**NOTHING SELECTED - CANCELLED**" }`
           })
           if (player.state !== "CONNECTED") {
             //set the variables

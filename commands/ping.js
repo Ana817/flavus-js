@@ -4,11 +4,11 @@ var { autoplay } = require(`${process.cwd()}/utils/functions`);
 
 module.exports = {
   name: "ping",
-  aliases: ["png"],
-  description: "Debug",
+  description: "Debug command",
   usage: `none`,
   visible: false,
-  async execute(client, message) {
-    return
+  player: true,
+  async execute(client, message, args, player) {
+    console.log(player)
   },
 };

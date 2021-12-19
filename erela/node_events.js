@@ -7,6 +7,7 @@ module.exports = (client) => {
     .on("nodeConnect", (node) => {
       if (!started) {
         started = true;
+        if (node.errored) node.errored = false
         client.clog(`Node connected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
       }
       setTimeout(() => {
@@ -27,10 +28,13 @@ module.exports = (client) => {
       }, 1000);
     })
     .on("nodeError", (node, error) => {
-      client.clog(`Node errored`.error + ` - `.def + `${String(node.options.identifier).debug}`);
+      if (!node.errored) {
+        client.clog(`Node errored`.error + ` - `.def + `${String(node.options.identifier).debug}`);
+        node.errored = true;
+      }
       setTimeout(() => {
         node.connect();
-      }, 1000);
+      }, 10000);
     })
     .on("playerCreate", (player) => {
       getVolume(player, client);

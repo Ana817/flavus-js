@@ -4,22 +4,12 @@ const playermanager = require(`${process.cwd()}/handlers/playermanager`);
 module.exports = {
   name: "play",
   aliases: ["p"],
-  description: "Add a song to the queue",
-  usage: `none`,
+  description: "Add a track to the queue",
+  usage: `\`<prefix>play <track>\` or \`<prefix>p <playlist_url>\``,
   visible: true,
+  voice: true,
   async execute(client, message, args) {
-    //check if the user is in a voice channel
-    if (!message.member.voice.channel) {
-      return message.channel.send({
-        embeds: [
-          new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
-            .setTitle("You must be in a voice channel to use this command!"),
-        ],
-      });
-    }
-    //if no args return
-    if (!args[0]) {
+    if (!args[0]) { // if no args
       return message.reply({
         embeds: [
           new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("No arguments provided!"),
