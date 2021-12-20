@@ -3,7 +3,8 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "skip",
   aliases: ["s"],
-  description: "Skips to next track",
+  description: "Skips to next or specific track",
+  usage: `\`<prefix>skip\` or \`<prefix>s <position in queue>\``,
   visible: true,
   voice: true,
   player: true,
@@ -48,10 +49,17 @@ module.exports = {
       `previousTrack`,
       player.queue.current
     );
-    //skip the track
-    player.stop();
-    //send success message
-
+    if (args[0] || !isNaN(args[0])) {
+      if (Number(args[0]) > player.queue.size || Number(args[0]) < 1) { //if the user wants to skip more tracks than are in the queue
+        message.reply({
+          embeds: [new MessageEmbed().setTitle("Can't skip there!").setColor(client.ee.color)],
+        });
+        return;
+      } else {
+        if (args[0] != 1) player.queue.remove(0, Number(args[0]) - 1); //remove tracks from queue
+      }
+    }
+    player.stop(); // skip the track
     return message.react("⏭").catch((e) => {});
   },
 };

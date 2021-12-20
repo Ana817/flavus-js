@@ -8,7 +8,7 @@
   "lavalink": {
     "nodes": [
         {
-        "host": "lavalink-repl.moumirrai.repl.co",
+        "host": "lavalink-replit.rainandrewandre.repl.co",
         "port": 443,
         "password": null,
         "secure": true
