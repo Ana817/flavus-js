@@ -1,8 +1,8 @@
 module.exports = (client) => {
   process.on("unhandledRejection", (reason, p) => {
-    console.log("\n\n\n\n\n=== unhandled Rejection ===".toUpperCase().yellow.dim);
+    console.log("\n=== unhandled Rejection ===".toUpperCase().yellow.dim);
     console.log("Reason: ", reason.stack ? String(reason.stack).gray : String(reason).gray);
-    console.log("=== unhandled Rejection ===\n\n\n\n\n".toUpperCase().yellow.dim);
+    console.log("=== unhandled Rejection ===\n".toUpperCase().yellow.dim);
   });
   process.on("uncaughtException", (err, origin) => {
     console.log("\n\n\n\n\n\n=== uncaught Exception ===".toUpperCase().yellow.dim);

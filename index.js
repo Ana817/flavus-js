@@ -4,6 +4,7 @@ const { DiscordTogether } = require('discord-together');
 const colors = require("colors");
 const toTime = require('to-time');
 const config = require("./config/config.json")
+const Genius = require("genius-lyrics");
 colors.setTheme({
   def: 'grey',
   log: 'brightGreen',
@@ -30,6 +31,12 @@ const client = new Discord.Client({
     status: "dnd"
   }
 });
+if (process.env.GENIUS) {
+  client.lyrics = new Genius.Client(process.env.genius)
+} else {
+  client.lyrics = new Genius.Client()
+}
+
 // append some stuff to the client
 client.discordTogether = new DiscordTogether(client); // Discord Together
 client.toTime = toTime;

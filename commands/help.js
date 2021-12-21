@@ -19,7 +19,7 @@ module.exports = {
           embed.setDescription(`${cmd.description}`);
         }
         if (cmd.usage) {
-          embed.addField("Usage", `${cmd.usage.replace(/<prefix>/g, client.config.prefix)}`);
+          embed.addField("Usage", `${cmd.usage.replace(/<prefix>/g, process.env.PREFIX)}`);
         }
         if (cmd.aliases) embed.addField("Aliases", `\`${cmd.aliases.join(", ")}\``);
         msg.channel.send({ embeds: [embed] });
