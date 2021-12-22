@@ -14,6 +14,7 @@ module.exports.escapeRegex = escapeRegex;
 module.exports.arrayMove = arrayMove;
 module.exports.isValidURL = isValidURL;
 module.exports.createQueueEmbed = createQueueEmbed;
+module.exports.splitLyrics = splitLyrics;
 module.exports.autoplay = autoplay;
 
 function handlemsg(txt, options) {
@@ -322,6 +323,37 @@ function createQueueEmbed(player, index) {
       //floor tracks.length / 15 up
       .setThumbnail(tracks.current.thumbnail);
     return embed;
+  }
+}
+
+
+
+async function splitLyrics(lyrics) {
+  if (!lyrics.includes("\n\n")) { //check there are paragraphs
+    let lines = lyrics.split("\n"); //split into lines
+    let lyricsArray = [];
+    for (let i = 0; i < lines.length; i += 35) { //split into pages of 35 lines
+      lyricsArray.push(lines.slice(i, i + 35).join("\n"));
+    }
+    return lyricsArray; //return array of pages
+  } else {
+    let paragraphs = lyrics.split("\n\n"); //split into paragraphs
+    //take fist paragraph and check if combined with the next paragraph is shorter than 35 lines
+    //if so, combine them, and try adding the next paragraph
+    //if its longer than 35 lines, push the first paragraph into an array
+    let lyricsArray = [];
+    lyricsArray.push(paragraphs[0]);
+    for (let i = 1; i < paragraphs.length; i++) {
+      if (paragraphs[i].split("\n").length + lyricsArray[lyricsArray.length - 1].split("\n").length < 35) {
+        lyricsArray[lyricsArray.length - 1] += "\n\n" + paragraphs[i];
+      } else {
+        let lines = paragraphs[i].split("\n");
+        for (let i = 0; i < lines.length; i += 35) {
+          lyricsArray.push(lines.slice(i, i + 35).join("\n"));
+        }
+      }
+    }
+    return lyricsArray;
   }
 }
 

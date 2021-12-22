@@ -9,6 +9,24 @@ module.exports = {
   player: true,
   voice: true,
   async execute(client, message, args, player) {
+    if (!player) {
+      return message.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setColor(client.ee.wrongcolor)
+            .setTitle("I am not playing anything right now!"),
+        ],
+      });
+    }
+    if (!player.queue.current) {
+      return message.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setColor(client.ee.wrongcolor)
+            .setTitle("I am not playing anything right now!"),
+        ],
+      });
+    }
     if (!args[0]) { // if no args return error
       return message.channel.send({
         embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("No arguments provided!").setDescription(createBar(player))],

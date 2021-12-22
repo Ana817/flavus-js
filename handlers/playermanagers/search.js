@@ -47,12 +47,24 @@ async function search(client, message, args, type) {
       return message.channel.send({
         embeds: [new MessageEmbed()
           .setColor(client.ee.wrongcolor)
-          .setTitle(eval(client.la[ls]["handlers"]["playermanagers"]["search"]["variable1"]))
-          .setDescription(eval(client.la[ls]["handlers"]["playermanagers"]["search"]["variable2"]))
+          .setTitle('Error while searching: `' + search + '`**')
         ]
       }).catch(() => {})
     }
 
+    if (!res.tracks[0]) {
+      return message.channel.send({
+        embeds: [new MessageEmbed()
+          .setColor(client.ee.wrongcolor)
+          .setTitle(String("Nothing found for: **`" + search).substr(0, 256 - 3) + "`**")
+          .setDescription('No songs were found in the playlist.')
+        ]
+      }).then(msg => {
+        setTimeout(() => {
+          msg.delete().catch(() => {})
+        }, 3000)
+      })
+    }
 
     var max = 10;
     var collected;
