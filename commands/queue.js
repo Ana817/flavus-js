@@ -32,7 +32,7 @@ module.exports = {
         });
         let currentIndex = 0;
         collector.on("collect", async (button) => {
-          button.deferUpdate(); //deferupdate
+          if (button.message.id !== message.id) return
           if (button.customId === "id_1") { // if left button is pressed
             currentIndex -= 15;
             if (currentIndex === 0) { // if we are on page 1 then disable prevoius button
@@ -43,6 +43,7 @@ module.exports = {
               embeds: [createQueueEmbed(player, currentIndex)],
               components: [row],
             });
+            await button.deferUpdate();
           } else if (button.customId === "id_2") { // if right button is pressed
             currentIndex += 15;
             if (currentIndex + 15 > tracks.length) { //if we are on last page then disable next button
@@ -53,6 +54,7 @@ module.exports = {
               embeds: [createQueueEmbed(player, currentIndex)],
               components: [row],
             });
+            await button.deferUpdate();
           }
         });
         collector.on("end", async (button) => { // after 60 seconds remove buttons and set page to 1

@@ -28,8 +28,6 @@ module.exports = async (client, message, args, type) => {
 
   if (method[0] === "song") {
     require("./playermanagers/song")(client, message, args, type);
-  } else if (method[0] === "playlist") {
-    require("./playermanagers/playlist")(client, message, args, type);
   } else if (method[0] === "similar") {
     require("./playermanagers/similar")(client, message, args, type);
   } else if (method[0] === "search") {

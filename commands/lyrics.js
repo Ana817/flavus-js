@@ -16,6 +16,7 @@ module.exports = {
     let lyricsmessage;
     let lyricsarray
     let name;
+    let lifetime = 120000;
 
     let row = new MessageActionRow().addComponents(
       (but_1 = new MessageButton().setCustomId("id_1").setEmoji("⬅️").setStyle("SECONDARY").setDisabled(true)),
@@ -63,6 +64,9 @@ module.exports = {
           ],
         });
       } else { //if found then send the lyrics
+        let current = player.queue.current.duration !== 0 ? player.position : player.queue.current.duration;
+        let total = player.queue.current.duration;
+        lifetime = total - current;
         name = player.queue.current.title
         lyricsarray = await splitLyrics(lyrics)
       }
@@ -78,13 +82,9 @@ module.exports = {
         components: [row],
       });
       
-      const collector = message.channel.createMessageComponentCollector(filter, { // create collector for buttons
-        time: 120000,
+      const collector = message.channel.createMessageComponentCollector({ // create collector for buttons
+        time: lifetime,
       });
-
-      function filter(collector, message) {
-        if (collector.options.channel.id !== message.id) return false;
-      }
       //do not react if button is from another message
       
       let currentIndex = 0;
@@ -128,6 +128,12 @@ module.exports = {
 };
 
 function createEmbed(lyricsarray, name, index, client) {
+  if (lyricsarray[index].length >= 3900) {
+    return new MessageEmbed()
+          .setColor(client.ee.wrongcolor)
+          .setTitle("There was an error while sending the lyrics!")
+          .setDescription(`Reason: \`${lyricsarray[index].length}\``)
+  }
   return new MessageEmbed()
     .setTitle(name)
     .setColor(client.ee.color)
@@ -140,11 +146,12 @@ async function getLyrics(artist, title, client) {
   try { //first try to get the lyrics from genius
     const searches = await client.lyrics.songs.search(query);
     //if !searches then error
-    if (searches.length === 0) {
-      return "Not Found!";
+    if (searches.length !== 0) {
+      const lyrics = await searches[0].lyrics();
+      return lyrics;
+    } else {
+      throw new Error("Not Found!");
     }
-    const lyrics = await searches[0].lyrics();
-    return lyrics;
   } catch (err) { //if not found
     try { //if not found then try use just title as a query
       const searches = await client.lyrics.songs.search(title);

@@ -221,34 +221,42 @@ function nFormatter(num, digits = 2) {
 }
 
 async function autoplay(client, player) {
+  if (player.get(`previousTrack`).requester != client.user || !player.get(`similarQueue`) || player.get(`similarQueue`).length === 0) {
+    try {
+      const previoustrack = player.get(`previousTrack`)
+      if (!previoustrack) return
+      const mixURL = `https://www.youtube.com/watch?v=${previoustrack.identifier}&list=RD${previoustrack.identifier}`;
+      const response = await client.manager.search(mixURL, client.user);
+      //if nothing is found, send error message, plus if there  is a delay for the empty QUEUE send error message TOO
+      if (!response || response.loadType === 'LOAD_FAILED' || response.loadType !== 'PLAYLIST_LOADED') {
+        const embed = new MessageEmbed()
+          .setTitle("Error")
+          .setDescription(`Couldn't add mix to queue!`)
+          .setColor(0xFF0000);
+        client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
+        return;
+      }
+      //remove every track from response.tracks that has the same identifier as the previous track
+      response.tracks = response.tracks.filter(track => track.identifier !== previoustrack.identifier);
+      //if there are no tracks left in the response, send error message
+      if (!response.tracks.length) {
+        const embed = new MessageEmbed()
+          .setTitle("Error")
+          .setDescription(`No similar tracks found!`)
+          .setColor(0xFF0000);
+        client.channels.cache.get(player.textChannel).send(embed).catch(() => { });
+        return;
+      }
+      player.set(`similarQueue`, response.tracks); //set the similar queue
+    } catch (e) {
+      console.log(String(e.stack).grey.bgRed);
+    }
+  }
   try {
-    const previoustrack = player.get(`previousTrack`)
-    if (!previoustrack) return;
-    //client.clog(player.queue);
-
-    const mixURL = `https://www.youtube.com/watch?v=${previoustrack.identifier}&list=RD${previoustrack.identifier}`;
-    const response = await client.manager.search(mixURL, previoustrack.requester);
-    //if nothing is found, send error message, plus if there  is a delay for the empty QUEUE send error message TOO
-    if (!response || response.loadType === 'LOAD_FAILED' || response.loadType !== 'PLAYLIST_LOADED') {
-      const embed = new MessageEmbed()
-        .setTitle("Error")
-        .setDescription(`Couldn't add mix to queue!`)
-        .setColor(0xFF0000);
-      client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
-      return;
-    }
-    //remove every track from response.tracks that has the same identifier as the previous track
-    response.tracks = response.tracks.filter(track => track.identifier !== previoustrack.identifier);
-    //if there are no tracks left in the response, send error message
-    if (!response.tracks.length) {
-      const embed = new MessageEmbed()
-        .setTitle("Error")
-        .setDescription(`No similar tracks found!`)
-        .setColor(0xFF0000);
-      client.channels.cache.get(player.textChannel).send(embed).catch(() => { });
-      return;
-    }
-    let track = response.tracks[Math.floor(Math.random() * Math.floor(response.tracks.length))]
+    const similarQueue = player.get(`similarQueue`);
+    //pick and remove a random track from the similar queue
+    const track = similarQueue.splice(Math.floor(Math.random() * similarQueue.length), 1)[0];
+    player.set(`similarQueue`, similarQueue)
     player.queue.add(track);
     const embed = new MessageEmbed()
       .setTitle("Autoplay")
@@ -265,13 +273,36 @@ async function autoplay(client, player) {
 
 function createQueueEmbed(player, index) {
   const tracks = player.queue;
+  let tDuration = { duration : 0, stream : 0 };
+  //for each track in queue, if isStream = false, add its duration to total duration
+  tracks.forEach(track => {
+    if (!track.isStream) tDuration.duration += track.duration;
+    else tDuration.stream++; 
+  });
+  //if current track is a stream, add 1 to stream, if not, add its duration to total duration
+  if (player.queue.current.isStream) tDuration.stream++;
+  else {
+    let current = player.queue.current.duration !== 0 ? player.position : player.queue.current.duration;
+    let total = player.queue.current.duration;
+    tDuration.duration += total - current;
+  }
   let queueLength
   if (tracks.length === 0) {
     queueLength = "";
   } else if (tracks.length === 1) {
     queueLength = "  -  1 Track";
   } else {
-    queueLength = `  -  ${tracks.length} Tracks `
+    queueLength = `  -  ${tracks.length} Tracks`
+  }
+  let totalDuration = "";
+  if (tDuration.duration !== 0 || tDuration.stream !== 0) {
+    if (tDuration.duration > 0) {
+      const frame = toTime.fromMinutes(Math.floor(tDuration.duration / 60000));
+      totalDuration += `\n\nTotal length - \`${frame.humanize()}\``
+      if (tDuration.stream > 0) totalDuration += ` + \`${tDuration.stream}\` Streams`
+    } else {
+      totalDuration += `\n\nTotal length - \`${tDuration.stream}\` Streams`
+    }
   }
   const embed = new MessageEmbed().setTitle("Queue" + queueLength).setColor(ee.color);
   let string = "";
@@ -292,9 +323,9 @@ function createQueueEmbed(player, index) {
   });
   let npstring = `${escapeRegex(tracks.current.title.substr(0, 60).replace(/\[/giu, "\\[").replace(/\]/giu, "\\]"))}`;
   if (npstring.length > 37) {
-    string = `**Now Playing - ` + `${npstring.substr(0, 37)}...**` + `\n${tracks.current.isStream ? `[:red_circle: LIVE STREAM]` : createBar(player)}\n`;
+    string = `**Now Playing - ` + `[${npstring.substr(0, 37)}...](${tracks.current.uri})` + `**\n${tracks.current.isStream ? `[:red_circle: LIVE STREAM]` : createBar(player)}\n`;
   } else {
-    string = `**Now Playing - ` + npstring + `**\n${tracks.current.isStream ? `[:red_circle: LIVE STREAM]` : createBar(player)}\n`;
+    string = `**Now Playing - ` + `[${npstring}](${tracks.current.uri})` + `**\n${tracks.current.isStream ? `[:red_circle: LIVE STREAM]` : createBar(player)}\n`;
   }
 
   if (indexes.length <= 15) {
@@ -305,8 +336,7 @@ function createQueueEmbed(player, index) {
       string += line + "\n";
     }
     string += "\n" + "This is the end of the queue!" + "\n" + "Use -play to add more :^)";
-    embed.setDescription(string).setFooter("Page 1 of 1").setThumbnail(tracks.current.thumbnail);
-    return embed;
+    embed.setDescription(string + totalDuration).setFooter("Page 1 of 1").setThumbnail(tracks.current.thumbnail);
   } else {
     indexes = indexes.slice(index, index + 15);
     titles = titles.slice(index, index + 15);
@@ -318,51 +348,36 @@ function createQueueEmbed(player, index) {
     }
     if (Math.ceil((index + 15) / 15) == Math.ceil(tracks.length / 15)) string += "\n" + "This is the end of the queue!" + "\n" + "\n" + "Use -play to add more :^)";
     embed
-      .setDescription(string)
+      .setDescription(string + totalDuration)
       .setFooter("Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15))
       //floor tracks.length / 15 up
       .setThumbnail(tracks.current.thumbnail);
-    return embed;
   }
+  return embed;
 }
 
 
 
-async function splitLyrics(lyrics) {
-  if (!lyrics.includes("\n\n")) { //check there are paragraphs
+function splitLyrics(lyrics) {
+  let lyricsArray = [];
+  if (!lyrics.includes("\n\n")) { //if there is no empty lines
     let lines = lyrics.split("\n"); //split into lines
-    let lyricsArray = [];
-    for (let i = 0; i < lines.length; i += 35) { //split into pages of 35 lines
-      lyricsArray.push(lines.slice(i, i + 35).join("\n"));
+    for (let i = 0; i < lines.length; i += 35) { 
+      lyricsArray.push(lines.slice(i, i + 35).join("\n")); //split into pages of 35 lines
     }
-    return lyricsArray; //return array of pages
   } else {
     let paragraphs = lyrics.split("\n\n"); //split into paragraphs
-    //take fist paragraph and check if combined with the next paragraph is shorter than 35 lines
-    //if so, combine them, and try adding the next paragraph
-    //if its longer than 35 lines, push the first paragraph into an array
-    let lyricsArray = [];
-    lyricsArray.push(paragraphs[0]);
+    lyricsArray.push(paragraphs[0]); //push first paragraph
     for (let i = 1; i < paragraphs.length; i++) {
-      if (paragraphs[i].split("\n").length + lyricsArray[lyricsArray.length - 1].split("\n").length < 35) {
-        lyricsArray[lyricsArray.length - 1] += "\n\n" + paragraphs[i];
-      } else {
+      if (paragraphs[i].split("\n").length + lyricsArray[lyricsArray.length - 1].split("\n").length < 35) { //check if combined with previous paragraph is less than 35 lines
+        lyricsArray[lyricsArray.length - 1] += "\n\n" + paragraphs[i]; //combine paragraphs
+      } else { //if more than 35 lines
         let lines = paragraphs[i].split("\n");
         for (let i = 0; i < lines.length; i += 35) {
           lyricsArray.push(lines.slice(i, i + 35).join("\n"));
         }
       }
     }
-    return lyricsArray;
   }
+  return lyricsArray; //return array of pages
 }
-
-/**
- * @INFO
- * Bot Coded by Tomato#6966 | https://discord.gg/milrato
- * @INFO
- * Work for Milrato Development | https://milrato.dev
- * @INFO
- * Please mention him / Milrato Development, when using this Code!
- * @INFO
- */

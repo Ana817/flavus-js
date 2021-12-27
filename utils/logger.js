@@ -1,3 +1,12 @@
+const colors = require("colors");
+colors.setTheme({
+    def: "grey",
+    log: "brightGreen",
+    warn: "yellow",
+    debug: "brightBlue",
+    error: "brightRed",
+});
+
 function log(input) {
     let string = `${String(`LAVAXE`+` Log`).brightRed}${` | `.grey}${`${new Date().toLocaleString()}`.cyan}${` | `.grey}`
     if (typeof input == "string") {

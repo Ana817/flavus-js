@@ -1,6 +1,3 @@
-const { MessageEmbed } = require("discord.js");
-const { MessageActionRow, MessageButton } = require("discord.js");
-var { autoplay } = require(`${process.cwd()}/utils/functions`);
 
 module.exports = {
   name: "ping",
@@ -9,5 +6,6 @@ module.exports = {
   visible: false,
   async execute(client, message, args) {
     return
+    //empty command
   },
 };

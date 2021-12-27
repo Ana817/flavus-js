@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
   name: "stop",
+  aliases: ["ds", "leave"],
   description: "Stops player, clears queue and leaves voice channel",
   visible: true,
   player: true,
