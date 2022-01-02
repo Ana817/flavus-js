@@ -258,6 +258,8 @@ async function autoplay(client, player) {
     const track = similarQueue.splice(Math.floor(Math.random() * similarQueue.length), 1)[0];
     player.set(`similarQueue`, similarQueue)
     player.queue.add(track);
+    console.log(similarQueue)
+    console.log(typeof similarQueue)
     const embed = new MessageEmbed()
       .setTitle("Autoplay")
       .setDescription(`[${track.title}](${track.uri})`)

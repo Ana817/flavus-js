@@ -10,13 +10,7 @@ module.exports = {
   voice: true,
   async execute(client, message, args) {
     if (!args[0]) // if no args return
-      return message.reply({
-        embeds: [
-          new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
-            .setTitle("No arguments provided!"),
-        ],
-      });
+      return message.channel.send(client.error("You need to specify a query!"));
     playermanager(client, message, args, `search:youtube`);
   },
 };

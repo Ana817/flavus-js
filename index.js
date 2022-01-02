@@ -33,6 +33,7 @@ client.toTime = require("to-time");
 client.config = config;
 client.ee = config.visuals.embed;
 client.clog = require("./utils/logger.js");
+client.error = require(`./utils/error.js`);
 
 const prefix = process.env.PREFIX || config.prefix;
 

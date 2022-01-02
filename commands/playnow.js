@@ -10,13 +10,7 @@ module.exports = {
   voice: true,
   async execute(client, message, args) {
     if (!args[0]) // if no args
-      return message.reply({
-        embeds: [
-          new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
-            .setTitle("No arguments provided!"),
-        ],
-      });
+      return message.channel.send(client.error("You need to specify a track or playlist!"));
     if (args.join("").includes("spotify")) {
       playermanager(client, message, args, `playtop:raw`);
     } else {

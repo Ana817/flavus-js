@@ -5,7 +5,7 @@ module.exports = {
   aliases: ["?"],
   description: "Shows all avalible commands, or help for a specific command",
   usage: `\`<prefix>help\` or \`<prefix>help <command>\``,
-  execute(client, msg, args) {
+  execute(client, message, args) {
     if (args[0]) { // if there is an argument, show help for that command
       const cmd = client.commands.get(args[0]) || client.aliases.get(args[0]);
       if (cmd) {
@@ -22,9 +22,9 @@ module.exports = {
           embed.addField("Usage", `${cmd.usage.replace(/<prefix>/g, process.env.PREFIX)}`);
         }
         if (cmd.aliases) embed.addField("Aliases", `\`${cmd.aliases.join(", ")}\``);
-        msg.channel.send({ embeds: [embed] });
+        message.channel.send({ embeds: [embed] });
       } else {
-        msg.channel.send(`Command \`${args[0]}\` not found`);
+        return message.channel.send(client.error(`Command \`${args[0]}\` not found`));
       }
     } else {
       const helpEmbed = new MessageEmbed()
@@ -38,7 +38,7 @@ module.exports = {
         //loop through all commands
         if (value.visible) helpEmbed.addField(`${value.name[0].toUpperCase()}${value.name.slice(1)}`, value.description); //add the command name and description to the embed
       }
-      msg.channel.send({ embeds: [helpEmbed] });
+      message.channel.send({ embeds: [helpEmbed] });
     }
   },
 };

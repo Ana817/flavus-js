@@ -9,13 +9,9 @@ module.exports = {
   player: true,
   async execute(client, message, args, player) {
     if (!player) {
-      return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("I am not playing anything right now!")],
-      });
+      return message.channel.send(client.error("I am not playing anything right now!"));
     } else if (!player.playing) {
-      return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("I am already paused!")],
-      });
+      return message.channel.send(client.error("I am already paused!"));
     }
     player.pause(true);
     message.react("⏸️").catch((e) => {});
