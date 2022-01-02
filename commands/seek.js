@@ -4,7 +4,7 @@ const { createBar } = require(`${process.cwd()}/utils/functions`);
 module.exports = {
   name: "seek",
   description: "Seeks to given time",
-  usage: `\`<prefix> seek 10\` or \`<prefix> seek 1:24:25\``,
+  usage: `\`<prefix>seek 10\` or \`<prefix>seek 1:24:25\``,
   visible: true,
   player: true,
   voice: true,
