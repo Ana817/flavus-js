@@ -11,12 +11,12 @@ module.exports = {
   aliases: ["pl"],
   description: "Creates, manages and loads playlists",
   info: "",
-  usage: `<prefix>pl`,
+  usage: `\`<prefix>playlist create <name>\` - creates playlist\n\`<prefix>pl <name>\` - loads playlist\n\`<prefix>pl list\` - lists all playlists\n\`<prefix>pl add <np|queue>\` - adds current track or queue to playlist\n\`<prefix>pl delete <name>\` - deletes playlist`,
   visible: true,
   player: true,
   async execute(client, message, args, player) {
     if (!args[0]) {
-      return client.error(message, "No arguments provided!");
+      return message.channel.send(client.error("No arguments provided!"));
     }
     switch (args[0]) {
 
