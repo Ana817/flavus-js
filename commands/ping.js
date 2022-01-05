@@ -7,9 +7,5 @@ module.exports = {
   visible: false,
   player: true,
   async execute(client, message, args, player) {
-    let data = player.get(`beforeshuffle`);
-    console.log(data);
-    console.log(typeof data);
-    console.log(data.length);
   },
 };

@@ -8,10 +8,10 @@
   "lavalink": {
     "nodes": [
         {
-        "host": "lavalink-replit.rainandrewandre.repl.co",
+        "host": "localhost",
         "port": 443,
         "password": null,
-        "secure": true
+        "secure": false
         }
     ]
   },

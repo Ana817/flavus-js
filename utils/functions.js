@@ -16,6 +16,7 @@ module.exports.isValidURL = isValidURL;
 module.exports.createQueueEmbed = createQueueEmbed;
 module.exports.splitLyrics = splitLyrics;
 module.exports.autoplay = autoplay;
+module.exports.createPlaylistEmbed = createPlaylistEmbed;
 
 function handlemsg(txt, options) {
   let text = String(txt);
@@ -354,6 +355,78 @@ function createQueueEmbed(player, index) {
       .setFooter("Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15))
       //floor tracks.length / 15 up
       .setThumbnail(tracks.current.thumbnail);
+  }
+  return embed;
+}
+
+
+function createPlaylistEmbed(playlist, index) {
+  const tracks = playlist.tracks;
+  let tDuration = { duration : 0, stream : 0 };
+  //for each track in queue, if isStream = false, add its duration to total duration
+  tracks.forEach(track => {
+    if (!track.isStream) tDuration.duration += track.duration;
+    else tDuration.stream++; 
+  });
+  //if current track is a stream, add 1 to stream, if not, add its duration to total duration
+  let queueLength
+  if (tracks.length === 0) {
+    queueLength = "";
+  } else if (tracks.length === 1) {
+    queueLength = "  -  1 Track";
+  } else {
+    queueLength = `  -  ${tracks.length} Tracks`
+  }
+  let totalDuration = "";
+  if (tDuration.duration !== 0 || tDuration.stream !== 0) {
+    if (tDuration.duration > 0) {
+      const frame = toTime.fromMinutes(Math.floor(tDuration.duration / 60000));
+      totalDuration += `\n\nTotal length - \`${frame.humanize()}\``
+      if (tDuration.stream > 0) totalDuration += ` + \`${tDuration.stream}\` Streams`
+    } else {
+      totalDuration += `\n\nTotal length - \`${tDuration.stream}\` Streams`
+    }
+  }
+  const embed = new MessageEmbed().setTitle(`**${playlist.name}**` + queueLength).setColor(ee.color);
+  let string = "";
+  var indexes = [];
+  var titles = [];
+  var durations = [];
+  tracks.map((track, index) => {
+    //load indexes
+    indexes.push(`${++index}`);
+    //load titles
+    let string = `${escapeRegex(track.title.substr(0, 60).replace(/\[/giu, "\\[").replace(/\]/giu, "\\]"))}`;
+    if (string.length > 37) {
+      string = `${string.substr(0, 37)}...`;
+    }
+    titles.push(string);
+    //load durations
+    durations.push(`${track.isStream ? `LIVE STREAM` : format(track.duration).split(` | `)[0]}`);
+  });
+
+  if (indexes.length <= 15) {
+    string += `\n`;
+    for (let i = 0; i < tracks.length; i++) {
+      //check if any index in track is longer than 1 digit
+      let line = `**${indexes[i]})** ${titles[i]} - [${durations[i]}]`;
+      string += line + "\n";
+    }
+    embed.setDescription(string + totalDuration).setFooter("Page 1 of 1").setThumbnail(tracks[0].thumbnail);
+  } else {
+    indexes = indexes.slice(index, index + 15);
+    titles = titles.slice(index, index + 15);
+    durations = durations.slice(index, index + 15);
+    string += `\n`;
+    for (let i = 0; i < indexes.length; i++) {
+      let line = `**${indexes[i]})** ${titles[i]} - [${durations[i]}]`;
+      string += line + "\n";
+    }
+    embed
+      .setDescription(string + totalDuration)
+      .setFooter("Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15))
+      //floor tracks.length / 15 up
+      .setThumbnail(tracks[0].thumbnail);
   }
   return embed;
 }
