@@ -7,5 +7,6 @@ module.exports = {
   visible: false,
   player: true,
   async execute(client, message, args, player) {
+    message.reply("pong");
   },
 };

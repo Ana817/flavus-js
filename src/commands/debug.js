@@ -1,6 +1,5 @@
 const { MessageEmbed } = require("discord.js");
 const { MessageActionRow, MessageButton } = require("discord.js");
-const autoplay = require(`${process.cwd()}/src/utils/autoplay`);
 
 module.exports = {
   name: "debug",

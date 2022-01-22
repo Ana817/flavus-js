@@ -20,6 +20,7 @@
     "erela.js": "^2.3.3",
     "erela.js-facebook": "^1.0.4",
     "erela.js-spotify": "^1.2.0",
+    "follow-redirects": "^1.14.7",
     "genius-lyrics": "^4.3.5",
     "lyrics-finder": "^21.7.0",
     "mongoose": "^6.1.4",

@@ -9,7 +9,7 @@ My personal music bot powered by lavalink. Based on [discord.js](https://discord
 
 
 ### Lavalink server and MongoDB instance required
- If you dont want to host your own Lavalink use these settings in `./config/config.json`:
+ If you dont want to host your own Lavalink use these settings in `config.json`:
  ```json
 "lavalink": {
     "nodes": [
@@ -76,7 +76,7 @@ Lot of code in this project is coming from **[discord-js-lavalink-Music-Bot-erel
 
 ## TODO
 - [ ] Add more commands
-- [ ] Add option to create and save playlists
+- [x] Add option to create and save playlists
 - [ ] Disconnect from voice channel when its empty
 - [ ] Rework all embeds
 - [ ] Clean up code

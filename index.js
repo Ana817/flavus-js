@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const { MessageEmbed } = require("discord.js");
 const { DiscordTogether } = require("discord-together");
 const config = require("./config.json");
 const Genius = require("genius-lyrics");
@@ -33,8 +32,6 @@ client.config = config;
 client.ee = config.visuals.embed;
 client.clog = require("./src/utils/logger.js");
 client.error = require("./src/utils/error.js");
-
-const prefix = process.env.PREFIX || config.prefix;
 
 client.setMaxListeners(25); // Max listeners
 require("events").defaultMaxListeners = 25;
