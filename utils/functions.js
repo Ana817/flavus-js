@@ -232,10 +232,9 @@ async function autoplay(client, player) {
       if (!response || response.loadType === 'LOAD_FAILED' || response.loadType !== 'PLAYLIST_LOADED') {
         const embed = new MessageEmbed()
           .setTitle("Error")
-          .setDescription(`Couldn't add mix to queue!`)
+          .setDescription(`No similar tracks found!`)
           .setColor(0xFF0000);
-        client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
-        return;
+        return client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
       }
       //remove every track from response.tracks that has the same identifier as the previous track
       response.tracks = response.tracks.filter(track => track.identifier !== previoustrack.identifier);
@@ -245,8 +244,7 @@ async function autoplay(client, player) {
           .setTitle("Error")
           .setDescription(`No similar tracks found!`)
           .setColor(0xFF0000);
-        client.channels.cache.get(player.textChannel).send(embed).catch(() => { });
-        return;
+        return client.channels.cache.get(player.textChannel).send({ embeds: [embed] }).catch(() => { });
       }
       player.set(`similarQueue`, response.tracks); //set the similar queue
     } catch (e) {
@@ -259,8 +257,6 @@ async function autoplay(client, player) {
     const track = similarQueue.splice(Math.floor(Math.random() * similarQueue.length), 1)[0];
     player.set(`similarQueue`, similarQueue)
     player.queue.add(track);
-    console.log(similarQueue)
-    console.log(typeof similarQueue)
     const embed = new MessageEmbed()
       .setTitle("Autoplay")
       .setDescription(`[${track.title}](${track.uri})`)
