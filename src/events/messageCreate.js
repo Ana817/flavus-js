@@ -1,4 +1,5 @@
 const prefix = process.env.PREFIX || config.prefix;
+const { MessageEmbed } = require("discord.js");
 
 module.exports = async (client, message) => {
     if (message.content.startsWith(prefix) && !message.author.bot && message.guild) {

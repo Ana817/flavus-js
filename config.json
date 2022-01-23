@@ -5,6 +5,7 @@
     "type": "PLAYING",
     "url": "https://twitch.tv/#"
   },
+  "leaveOnEmptyChannel": 300000,
   "lavalink": {
     "nodes": [
         {

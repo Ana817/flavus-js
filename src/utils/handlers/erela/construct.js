@@ -28,7 +28,7 @@ module.exports = (client) => {
   });
   //require the other events
   require("./node_events")(client);
-  //require("./events")(client)
+  require("./events")(client)
 };
 /**
  * @INFO

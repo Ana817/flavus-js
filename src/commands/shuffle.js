@@ -8,10 +8,6 @@ module.exports = {
   voice: true,
   player: true,
   async execute(client, message, args, player) {
-    player.set(
-      `beforeshuffle`,
-      player.queue.map((track) => track)
-    );
     //shuffle the Queue
     player.queue.shuffle();
     //return success reaction

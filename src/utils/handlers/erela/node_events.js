@@ -36,18 +36,6 @@ module.exports = (client) => {
         node.connect();
       }, 10000);
     })
-    .on("playerCreate", (player) => {
-      getVolume(player, client);
-    })
-    .on("queueEnd", (player) => {
-      getAutoplay(player, client);
-    })
-    .on("trackStart", (player) => {
-      player.set(
-        `previousTrack`,
-        player.queue.current
-      );
-    });
 };
 /**
  * @INFO
