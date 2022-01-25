@@ -8,7 +8,7 @@ colors.setTheme({
 });
 
 function log(input) {
-    let string = `${String(`LAVAXE`+` Log`).brightRed}${` | `.grey}${`${new Date().toLocaleString()}`.cyan}${` | `.grey}`
+    let string = `${String(`FLAVUS`+` Log`).yellow}${` | `.grey}${`${new Date().toLocaleString()}`.cyan}${` | `.grey}`
     if (typeof input == "string") {
         console.log(string, input.split("\n").map(d => `${d}`).join(`\n${string} `))
     } else if (typeof input == "object") {

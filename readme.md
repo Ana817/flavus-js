@@ -1,4 +1,4 @@
-# Lavaxe
+# Flavus
 
 My personal music bot powered by lavalink. Based on [discord.js](https://discord.js.org/#/) and [erela.js](https://erelajs-docs.netlify.app/docs/gettingstarted.html#documentation-guides).
 
@@ -59,7 +59,7 @@ You can then modify the settings in the configuration file located in `config` f
     "embed": {
       "color": "#ffcc00",
       "wrongcolor": "#FF0000",
-      "footertext": "LAVAXE",
+      "footertext": "FLAVUS",
       "footericon": "XXX",
       "progress_bar": {
         "size": "12",

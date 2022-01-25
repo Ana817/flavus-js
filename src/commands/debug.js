@@ -5,13 +5,20 @@ module.exports = {
   name: "debug",
   description: "Debug command",
   usage: `none`,
-  player: true,
+  player: false,
   visible: false,
   async execute(client, message, args, player) {
-    //join args into a string
-    if (!player) return
-    if (!player.get(`similarQueue`)) return message.channel.send(`smQueue has not been generated yet!`)
-    const similarQueue = player.get(`similarQueue`);
-    message.channel.send(`**Debug** - smQueue length - \`${similarQueue.length}\``)
+    message.channel.send({
+      embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Gathering data...")],
+    }).then (async (msg) => {
+      msg.delete()
+      return message.channel.send({
+        embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Debug Embed").setDescription(`Name - \`${client.user.tag}\` - \`[${client.user.id}]\`
+        Latency - \`${msg.createdTimestamp - message.createdTimestamp}ms\`
+        Api Latency - \`${Math.round(client.ws.ping)}ms\`
+        Runtime - \`${client.toTime.fromSeconds(Math.round(client.uptime / 1000)).humanize()}\`
+        Memory usage - \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}mb\``)],
+      });
+    });
   },
 };

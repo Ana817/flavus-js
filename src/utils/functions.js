@@ -335,7 +335,7 @@ function createQueueEmbed(player, index) {
       string += line + "\n";
     }
     string += "\n" + "This is the end of the queue!" + "\n" + "Use -play to add more :^)";
-    embed.setDescription(string + totalDuration).setFooter("Page 1 of 1").setThumbnail(tracks.current.thumbnail);
+    embed.setDescription(string + totalDuration).setFooter({ text: "Page 1 of 1" }).setThumbnail(tracks.current.thumbnail);
   } else {
     indexes = indexes.slice(index, index + 15);
     titles = titles.slice(index, index + 15);
@@ -348,7 +348,7 @@ function createQueueEmbed(player, index) {
     if (Math.ceil((index + 15) / 15) == Math.ceil(tracks.length / 15)) string += "\n" + "This is the end of the queue!" + "\n" + "\n" + "Use -play to add more :^)";
     embed
       .setDescription(string + totalDuration)
-      .setFooter("Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15))
+      .setFooter({ text: "Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15) })
       //floor tracks.length / 15 up
       .setThumbnail(tracks.current.thumbnail);
   }
@@ -408,7 +408,7 @@ function createPlaylistEmbed(playlist, index) {
       let line = `**${indexes[i]})** ${titles[i]} - [${durations[i]}]`;
       string += line + "\n";
     }
-    embed.setDescription(string + totalDuration).setFooter("Page 1 of 1").setThumbnail(tracks[0].thumbnail);
+    embed.setDescription(string + totalDuration).setFooter({ text: "Page 1 of 1" }).setThumbnail(tracks[0].thumbnail);
   } else {
     indexes = indexes.slice(index, index + 15);
     titles = titles.slice(index, index + 15);
@@ -420,7 +420,7 @@ function createPlaylistEmbed(playlist, index) {
     }
     embed
       .setDescription(string + totalDuration)
-      .setFooter("Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15))
+      .setFooter({ text: "Page " + Math.ceil((index + 15) / 15) + " of " + Math.ceil(tracks.length / 15) })
       //floor tracks.length / 15 up
       .setThumbnail(tracks[0].thumbnail);
   }

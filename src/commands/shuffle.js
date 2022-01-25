@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "shuffle",
   aliases: ["sf"],
-  description: "Shuffles current queue",
+  description: "Shuffles queue",
   visible: true,
   voice: true,
   player: true,

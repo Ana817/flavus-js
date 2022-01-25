@@ -3,7 +3,7 @@ const playermanager = require(`${process.cwd()}/src/utils/handlers/playermanager
 module.exports = {
   name: "play",
   aliases: ["p"],
-  description: "Add a track to the queue",
+  description: "Adds a track or playlist to the queue",
   usage: `\`<prefix>play <track>\` or \`<prefix>p <playlist_url>\``,
   visible: true,
   voice: true,

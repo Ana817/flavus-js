@@ -7,7 +7,7 @@ module.exports = {
   usage: `\`<prefix>help\` or \`<prefix>help <command>\``,
   execute(client, message, args) {
     if (args[0]) { // if there is an argument, show help for that command
-      const cmd = client.commands.get(args[0]) || client.aliases.get(args[0]);
+      const cmd = client.commands.get(args[0].toLowerCase()) || client.aliases.get(args[0].toLowerCase());
       if (cmd) {
         const embed = new MessageEmbed()
           .setColor(client.ee.color)
@@ -33,11 +33,14 @@ module.exports = {
         .setDescription(
           `${process.env.prefix}help (cmd name), display the help for a specific command`
         );
-
+      let array = [];
       for (let [key, value] of client.commands) {
         //loop through all commands
-        if (value.visible) helpEmbed.addField(`${value.name[0].toUpperCase()}${value.name.slice(1)}`, value.description); //add the command name and description to the embed
+        if (value.visible) array.push(`\`${value.name[0].toUpperCase()}${value.name.slice(1)}\``);
+        //if (value.visible) helpEmbed.addField(`${value.name[0].toUpperCase()}${value.name.slice(1)}`, value.description); //add the command name and description to the embed
       }
+      //join all items in the array with a comma and space
+      helpEmbed.addField("Commands", array.join(", "));
       message.channel.send({ embeds: [helpEmbed] });
     }
   },

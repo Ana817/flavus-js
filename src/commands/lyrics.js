@@ -138,7 +138,7 @@ function createEmbed(lyricsarray, name, index, client) {
     .setTitle(name)
     .setColor(client.ee.color)
     .setDescription(`\`\`\`${lyricsarray[index]}\`\`\``)
-    .setFooter(`Page ${index + 1} of ${lyricsarray.length}`);
+    .setFooter({ text: `Page ${index + 1} of ${lyricsarray.length}` })
 }
 
 async function getLyrics(artist, title, client) {

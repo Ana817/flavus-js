@@ -3,7 +3,7 @@ var { format } = require(`${process.cwd()}/src/utils/functions`);
 
 module.exports = {
   name: "grab",
-  description: "Sends information about the current track to your DM",
+  description: "Sends info about the current track to your DM",
   visible: true,
   player: true,
   async execute(client, message , args, player) {
@@ -13,7 +13,7 @@ module.exports = {
           .setColor(client.ee.wrongcolor)
           .setTitle(`There is no song playing right now!`)
           .setTimestamp()
-          .setFooter(`Requested in - ${message.guild.name}`, message.guild.iconURL())
+          .setFooter({ text: `Requested in - ${message.guild.name}`, iconURL: message.guild.iconURL()})
         ]
       });
       return message.delete().catch((e) => {});
@@ -28,7 +28,7 @@ module.exports = {
         .addField(`Author`, `\`${player.queue.current.author}\``, true)
         .addField(`Requested by:`, `\`${player.queue.current.requester.tag}\``, true)
         .setTimestamp()
-        .setFooter(`Requested in: ${message.guild.name}`, message.guild.iconURL())
+        .setFooter({ text: `Requested in - ${message.guild.name}`, iconURL: message.guild.iconURL()})
       ]
     }).catch(e => {
       message.author.send('Error')
