@@ -3,6 +3,7 @@ const { MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
   name: "debugstats",
+  aliases: ["runtime"],
   description: "Debug command",
   usage: `none`,
   player: false,

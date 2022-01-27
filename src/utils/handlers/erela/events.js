@@ -1,7 +1,6 @@
 const { Player, TrackUtils } = require("erela.js");
 var { getVolume, getAutoplay, getAutoresume, setAutoresume, savePlayer, getPlayer } = require(`${process.cwd()}/src/utils/mongo`);
 
-let started = false;
 module.exports = (client) => {
 
   playerintervals = new Map();
@@ -11,7 +10,7 @@ module.exports = (client) => {
     const resumeGuilds = await getAutoresume();
     resumeGuilds.forEach(async (guild) => {
       //if guild.timestamp is older than 5 minutes, don't resume
-      //if (Date.now() - guild.timestamp > 300000) return;
+      if (Date.now() - guild.timestamp > 300000) return;
       const sPlayer = await getPlayer(guild.guildID);
       if (!sPlayer) return;
       //if sPlayer.queue is empty, and sPlayer.current is empty as well, don't resume
