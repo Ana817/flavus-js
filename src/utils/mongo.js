@@ -75,7 +75,8 @@ async function savePlayer(player, client) {
                     thumbnail: player.queue.current.thumbnail,
                     position: player.position,
                     paused: player.paused,
-                }
+                },
+                timestamp: Date.now(),
             });
             data.save().catch((err) => console.log(err));
         } else {
@@ -93,7 +94,7 @@ async function savePlayer(player, client) {
                 position: player.position,
                 paused: player.paused,
             };
-            data.date = Date.now();
+            data.timestamp = Date.now();
             data.save().catch((err) => console.log(err));
         }
     });
