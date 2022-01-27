@@ -11,7 +11,7 @@ module.exports = {
       return message.channel.send({
         embeds: [
           new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
+            .setColor(client.embed.wrongcolor)
             .setTitle("You must be in a voice channel to use this command!"),
         ],
       });
@@ -22,7 +22,7 @@ module.exports = {
           new MessageButton().setLabel("Join").setStyle("LINK").setURL(invite.code)
         );
 
-        const Embed = new MessageEmbed().setColor(client.ee.color).setTitle("WatchTogether session created!");
+        const Embed = new MessageEmbed().setColor(client.embed.color).setTitle("WatchTogether session created!");
 
         return message.channel.send({ embeds: [Embed], components: [row] });
       });
@@ -32,7 +32,7 @@ module.exports = {
           new MessageButton().setLabel("Join").setStyle("LINK").setURL(invite.code)
         );
 
-        const Embed = new MessageEmbed().setColor(client.ee.color).setTitle("WatchTogether session created!");
+        const Embed = new MessageEmbed().setColor(client.embed.color).setTitle("WatchTogether session created!");
 
         return message.channel.send({ embeds: [Embed], components: [row] });
       });

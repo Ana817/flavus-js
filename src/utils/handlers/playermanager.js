@@ -11,7 +11,7 @@ module.exports = async (client, message, args, type) => {
   if (!permissions.has("CONNECT")) {
     return message.reply({
       embeds: [new MessageEmbed()
-        .setColor(client.ee.wrongcolor)
+        .setColor(client.embed.wrongcolor)
         .setTitle('I dont have the permission to connect to a voice channel!')
       ]
     }).catch((e) => console.log(String(e).grey));
@@ -20,7 +20,7 @@ module.exports = async (client, message, args, type) => {
   if (!permissions.has("SPEAK")) {
     return message.reply({
       embeds: [new MessageEmbed()
-        .setColor(client.ee.wrongcolor)
+        .setColor(client.embed.wrongcolor)
         .setTitle('I dont have the permission to speak in this voice channel!')
       ]
     }).catch((e) => console.log(String(e).grey));
@@ -35,7 +35,7 @@ module.exports = async (client, message, args, type) => {
   } else if (method[0] === "playtop") {
     require("./playermanagers/playtop")(client, message, args, type)
   } else {
-    return client.clog('playermanager error!'.error)
+    return client.logger('playermanager error!'.error)
     }
 }
 //Original code by Tomato#6966 | https://discord.gg/milrato

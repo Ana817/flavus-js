@@ -10,7 +10,7 @@ module.exports = {
       const cmd = client.commands.get(args[0].toLowerCase()) || client.aliases.get(args[0].toLowerCase());
       if (cmd) {
         const embed = new MessageEmbed()
-          .setColor(client.ee.color)
+          .setColor(client.embed.color)
           .setTitle(`${cmd.name[0].toUpperCase()}${cmd.name.slice(1)}`)
         if(cmd.info) {
           descriptionString = `${cmd.description}\n\n${cmd.info}`
@@ -28,7 +28,7 @@ module.exports = {
       }
     } else {
       const helpEmbed = new MessageEmbed()
-        .setColor(client.ee.color)
+        .setColor(client.embed.color)
         .setTitle("HELP")
         .setDescription(
           `${process.env.prefix}help (cmd name), display the help for a specific command`

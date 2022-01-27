@@ -8,11 +8,11 @@ module.exports = {
   player: true,
   async execute(client, message, args, player) {
     message.channel.send({
-      embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Measuring...")],
+      embeds: [new MessageEmbed().setColor(client.embed.color).setTitle("Measuring...")],
     }).then (async (msg) => {
       msg.delete()
       return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Pong!").setDescription(`Latency - \`${msg.createdTimestamp - message.createdTimestamp}ms\`\nAPI Latency - \`${Math.round(client.ws.ping)}ms\``)],
+        embeds: [new MessageEmbed().setColor(client.embed.color).setTitle("Pong!").setDescription(`Latency - \`${msg.createdTimestamp - message.createdTimestamp}ms\`\nAPI Latency - \`${Math.round(client.ws.ping)}ms\``)],
       });
     });
   },

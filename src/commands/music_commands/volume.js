@@ -12,20 +12,20 @@ module.exports = {
   async execute(client, message, args, player) {
     if (!player) {
       return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.wrongcolor).setTitle("I am not playing anything right now!")],
+        embeds: [new MessageEmbed().setColor(client.embed.wrongcolor).setTitle("I am not playing anything right now!")],
       });
     }
     if (!args[0])
       return message.channel.send({
         embeds: [
-          new MessageEmbed().setColor(client.ee.color).setDescription(`Current volume is \`${player.volume}%\``),
+          new MessageEmbed().setColor(client.embed.color).setDescription(`Current volume is \`${player.volume}%\``),
         ],
       });
     if (Number(args[0]) <= 0 || Number(args[0]) > 150)
       return message.channel.send({
         embeds: [
           new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
+            .setColor(client.embed.wrongcolor)
             .setTitle("Volume must be between 0 and 150!")
             .setDescription(`Current volume is \`${player.volume}%\``),
         ],
@@ -34,7 +34,7 @@ module.exports = {
       return message.channel.send({
         embeds: [
           new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
+            .setColor(client.embed.wrongcolor)
             .setTitle("Argument must be a number!")
             .setDescription(`Current volume is \`${player.volume}%\``),
         ],
@@ -45,11 +45,11 @@ module.exports = {
         new MessageEmbed()
           .setTitle("Volume set!")
           .setDescription(`Current volume is \`${player.volume}%\``)
-          .setColor(client.ee.color),
+          .setColor(client.embed.color),
       ],
     });
     guildSettings.findOne({ guildID: player.options.guild }, (err, settings) => {
-      if (err) return client.clog(err);
+      if (err) return client.logger(err);
       if (!settings) {
         settings = new guildSettings({
           guildID: player.options.guild,

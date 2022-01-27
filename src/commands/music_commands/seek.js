@@ -37,7 +37,7 @@ module.exports = {
         new MessageEmbed()
           .setTitle(`Seeked to - ${new Date(player.position).toISOString().substr(11, 8)}`)
           .setDescription(createBar(player))
-          .setColor(client.ee.color),
+          .setColor(client.embed.color),
       ],
     });
   },

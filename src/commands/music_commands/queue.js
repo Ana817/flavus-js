@@ -11,7 +11,7 @@ module.exports = {
   async execute(client, message, args, player) {
     if (!player) {
       return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Queue is empty!")],
+        embeds: [new MessageEmbed().setColor(client.embed.color).setTitle("Queue is empty!")],
       });
     }
     // create buttons

@@ -46,7 +46,7 @@ async function search(client, message, args, type) {
       console.log(e.stack ? String(e.stack).grey : String(e).grey)
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle('Error while searching: `' + search + '`**')
         ]
       }).catch(() => {})
@@ -55,7 +55,7 @@ async function search(client, message, args, type) {
     if (!res.tracks[0]) {
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle(String("Nothing found for: **`" + search).substr(0, 256 - 3) + "`**")
           .setDescription('No songs were found in the playlist.')
         ]
@@ -106,7 +106,7 @@ async function search(client, message, args, type) {
         embeds: [
           new MessageEmbed()
           .setTitle(`Results for: **\`${search}`.substr(0, 256 - 3) + "`**")
-          .setColor(client.ee.color)
+          .setColor(client.embed.color)
           .setDescription(results)
         ],
         components: [
@@ -164,7 +164,7 @@ async function search(client, message, args, type) {
             var embed3 = new MessageEmbed()
               .setTitle(`Added ${toAddTracks.length > 1 ? `${toAddTracks.length} Tracks, with the first one beeing: `: ``}${track.title}`)
               .setDescription(`**Queued [${track.title}](${track.uri})**`)
-              .setColor(client.ee.color)
+              .setColor(client.embed.color)
               .addField("Duration: ", `\`${track.isStream ? "LIVE STREAM" : format(track.duration)}\``, true)
               .addField("Song By: ", `\`${track.author}\``, true)
             
@@ -187,7 +187,7 @@ async function search(client, message, args, type) {
     console.log(e.stack ? String(e.stack).grey : String(e).grey)
     return message.channel.send({
       embeds: [new MessageEmbed()
-        .setColor(client.ee.wrongcolor)
+        .setColor(client.embed.wrongcolor)
         .setTitle(String("Nothing found for: **`" + search).substr(0, 256 - 3) + "`**")
       ]
     }).catch(() => {}).then(msg => {

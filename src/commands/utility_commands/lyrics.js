@@ -25,7 +25,7 @@ module.exports = {
 
     if (args[0]) { //if there is an argument then use it as a query
       lyricsmessage = await message.channel.send({ //send a searching message to the channel
-        embeds: [new MessageEmbed().setTitle("Searching...").setColor(client.ee.color)],
+        embeds: [new MessageEmbed().setTitle("Searching...").setColor(client.embed.color)],
       });
       let query = args.join(" ");
       lyrics = await queryLyrics(query, client);//get the lyrics
@@ -33,7 +33,7 @@ module.exports = {
         return lyricsmessage.edit({
           embeds: [
             new MessageEmbed()
-              .setColor(client.ee.wrongcolor)
+              .setColor(client.embed.wrongcolor)
               .setTitle("Could not find lyrics for this song!"),
           ],
         });
@@ -46,20 +46,20 @@ module.exports = {
         return lyricsmessage.edit({
           embeds: [
             new MessageEmbed()
-              .setColor(client.ee.wrongcolor)
+              .setColor(client.embed.wrongcolor)
               .setTitle("I am not playing anything right now!"),
           ],
         });
       }
       lyricsmessage = await message.channel.send({ //send a searching message to the channel
-        embeds: [new MessageEmbed().setTitle("Searching...").setColor(client.ee.color)],
+        embeds: [new MessageEmbed().setTitle("Searching...").setColor(client.embed.color)],
       });
       lyrics = await getLyrics(player.queue.current.author, player.queue.current.title, client);
       if (lyrics == "Not Found!") { //if not found then send a message
         return lyricsmessage.edit({
           embeds: [
             new MessageEmbed()
-              .setColor(client.ee.wrongcolor)
+              .setColor(client.embed.wrongcolor)
               .setTitle("Could not find lyrics for this song!"),
           ],
         });
@@ -130,13 +130,13 @@ module.exports = {
 function createEmbed(lyricsarray, name, index, client) {
   if (lyricsarray[index].length >= 3900) {
     return new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle("There was an error while sending the lyrics!")
           .setDescription(`Reason: \`${lyricsarray[index].length}\``)
   }
   return new MessageEmbed()
     .setTitle(name)
-    .setColor(client.ee.color)
+    .setColor(client.embed.color)
     .setDescription(`\`\`\`${lyricsarray[index]}\`\`\``)
     .setFooter({ text: `Page ${index + 1} of ${lyricsarray.length}` })
 }

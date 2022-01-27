@@ -21,7 +21,7 @@ module.exports = (client) => {
     },
   });
 
-  client.clog(`Erela initialized!`.log);
+  client.logger(`Erela initialized!`.log);
 
   client.once("ready", () => {
     client.manager.init(client.user.id);

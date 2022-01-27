@@ -70,7 +70,7 @@ async function similar(client, message, args, type) {
       else if (res.loadType === "PLAYLIST_LOADED") {
         return message.channel.send({
           embeds: [new MessageEmbed()
-            .setColor(client.ee.wrongcolor)
+            .setColor(client.embed.wrongcolor)
             .setTitle(`Url can't be playlist!`)
           ]
         })
@@ -78,7 +78,7 @@ async function similar(client, message, args, type) {
         if (!res.tracks[0]) {
           return message.channel.send({
             embeds: [new MessageEmbed()
-              .setColor(client.ee.wrongcolor)
+              .setColor(client.embed.wrongcolor)
               .setTitle(`No results found!`)
             ]
           })
@@ -91,7 +91,7 @@ async function similar(client, message, args, type) {
       console.log(e)
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle(String("There was an Error while searching: `" + search).substr(0, 256 - 3) + "`**")
           .setDescription(`\`\`\`${e}\`\`\``.substr(0, 2000))
         ]
@@ -104,7 +104,7 @@ async function similar(client, message, args, type) {
     if (!previoustrack) {
       return message.channel.send({
         embeds: [new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle(`No arguments provided!`)
         ]
       })
@@ -172,7 +172,7 @@ async function similar(client, message, args, type) {
         const embed = new MessageEmbed()
           .setTitle("Added similar track to queue")
           .setDescription(`[${track[0].title}](${track[0].uri})`)
-          .setColor(client.ee.color)
+          .setColor(client.embed.color)
           .setThumbnail(track[0].thumbnail);
         message.channel.send({ embeds: [embed] }).catch(() => { });
       } else {
@@ -185,7 +185,7 @@ async function similar(client, message, args, type) {
           .setDescription(`First of them - [${track[0].title}](${track[0].uri})`)
           .addField("Duration: ", `\`${format(duration)}\``, true)
           .addField("Queue length: ", `\`${player.queue.length} Songs\``, true)
-          .setColor(client.ee.color)
+          .setColor(client.embed.color)
           .setThumbnail(track[0].thumbnail);
         message.channel.send({ embeds: [embed] }).catch(() => { });
       }

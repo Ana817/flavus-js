@@ -8,28 +8,27 @@ module.exports = (client) => {
       if (!started) {
         started = true;
         if (node.errored) node.errored = false
-        client.clog(`Node connected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
+        client.logger(`Node connected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
       }
       setTimeout(() => {
         started = false;
       }, 2000);
     })
     .on("nodeCreate", (node) => {
-      client.clog(`Node created`.log + ` - `.def + `${String(node.options.identifier).debug}`);
+      client.logger(`Node created`.log + ` - `.def + `${String(node.options.identifier).debug}`);
     })
     .on("nodeReconnect", (node) => {
-      client.clog(`Node reconnecting`.log + ` - `.def + `${String(node.options.identifier).debug}`);
+      client.logger(`Node reconnecting`.log + ` - `.def + `${String(node.options.identifier).debug}`);
     })
     .on("nodeDisconnect", (node) => {
-      if (!started) return;
-      client.clog(`Node disconnected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
+      client.logger(`Node disconnected`.log + ` - `.def + `${String(node.options.identifier).debug}`);
       setTimeout(() => {
         node.connect();
       }, 1000);
     })
     .on("nodeError", (node, error) => {
       if (!node.errored) {
-        client.clog(`Node errored`.error + ` - `.def + `${String(node.options.identifier).debug}`);
+        client.logger(`Node errored`.error + ` - `.def + `${String(node.options.identifier).debug}`);
         node.errored = true;
       }
       setTimeout(() => {

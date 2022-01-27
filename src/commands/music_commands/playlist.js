@@ -90,7 +90,7 @@ async function create(client, message, args, player) {
           new MessageEmbed()
             .setTitle(`Playlist \`${args[1]}\` created!`)
             .setDescription(`@todo - add desription`)
-            .setColor(client.ee.color),
+            .setColor(client.embed.color),
         ],
       });
   });
@@ -109,7 +109,7 @@ async function list(client, message, args, player) {
               new MessageEmbed()
                 .setTitle(`Playlist list - \`${message.author.tag}\``)
                 .setDescription(`${plist.map(pl => `${i++} - \`${pl.name}\``).join('\n')}`)
-                .setColor(client.ee.color),
+                .setColor(client.embed.color),
             ],
           });
       }
@@ -137,7 +137,7 @@ async function add(client, message, args, player, plist) {
           embeds: [
             new MessageEmbed()
               .setTitle(`Current track added to playlist - \`${plist.name}\``)
-              .setColor(client.ee.color),
+              .setColor(client.embed.color),
           ],
         });
       break
@@ -176,7 +176,7 @@ async function add(client, message, args, player, plist) {
           embeds: [
             new MessageEmbed()
               .setTitle(`\`${newtracks.length}\` tracks added to playlist - \`${plist.name}\``)
-              .setColor(client.ee.color),
+              .setColor(client.embed.color),
           ],
         });
       break;
@@ -355,7 +355,7 @@ async function play(client, message, args, player, plist) {
     embeds: [
       new MessageEmbed()
         .setTitle(`Loaded playlist - \`${plist.name}\` - \`${plist.tracks.length}\` tracks`)
-        .setColor(client.ee.color),
+        .setColor(client.embed.color),
     ],
   })
   if (playercreate) player.play();
@@ -366,7 +366,7 @@ async function deletePlaylist(client, message, args, player) {
     embeds: [
       new MessageEmbed()
         .setTitle(`Are you sure you want to delete playlist \`${args[1]}\`?`)
-        .setColor(client.ee.wrongcolor),
+        .setColor(client.embed.wrongcolor),
     ],
     components: [new MessageActionRow().addComponents(
       (but_1 = new MessageButton().setCustomId("no").setStyle("SUCCESS").setLabel("NO")),
@@ -392,7 +392,7 @@ async function deletePlaylist(client, message, args, player) {
         embeds: [
           new MessageEmbed()
             .setTitle(`Playlist \`${args[0]}\` deleted!`)
-            .setColor(client.ee.color),
+            .setColor(client.embed.color),
         ],
       });
     }
@@ -419,7 +419,7 @@ async function rename(client, message, args, player, plist) {
     embeds: [
       new MessageEmbed()
         .setTitle(`Playlist \`${original}\` was renamed to \`${plist.name}\`!`)
-        .setColor(client.ee.color),
+        .setColor(client.embed.color),
     ],
   });
 }

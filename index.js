@@ -1,7 +1,4 @@
 const Discord = require("discord.js");
-const { DiscordTogether } = require("discord-together");
-const config = require("./config.json");
-const Genius = require("genius-lyrics");
 require("dotenv").config();
 
 const client = new Discord.Client({
@@ -20,23 +17,10 @@ const client = new Discord.Client({
     status: "dnd",
   },
 });
-if (process.env.GENIUS) {
-  client.lyrics = new Genius.Client(process.env.genius);
-} else {
-  client.lyrics = new Genius.Client();
-}
 
-client.discordTogether = new DiscordTogether(client); // Discord Together
-client.toTime = require("to-time");
-client.config = config;
-client.ee = config.visuals.embed;
-client.clog = require("./src/utils/logger.js");
-client.error = require("./src/utils/error.js");
+require("./src/utils/client")(client);
 
-client.setMaxListeners(25); // Max listeners
-require("events").defaultMaxListeners = 25;
-
-client.clog("Initializing...".def);
+client.logger("Initializing...".def);
 
 // load handlers
 Array("events", "commands", "erela", "errorEvent", "loadMongo").forEach((handler) => {
@@ -47,4 +31,4 @@ Array("events", "commands", "erela", "errorEvent", "loadMongo").forEach((handler
   }
 });
 
-client.login(process.env.token || config.token);
+client.login(process.env.token || client.config.token);

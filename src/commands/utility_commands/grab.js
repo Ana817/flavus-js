@@ -10,7 +10,7 @@ module.exports = {
     if (!player || !player.queue.current) { // if there is no player or no current track
       message.author.send({
         embeds: [new MessageEmbed()
-          .setColor(client.ee.wrongcolor)
+          .setColor(client.embed.wrongcolor)
           .setTitle(`There is no song playing right now!`)
           .setTimestamp()
           .setFooter({ text: `Requested in - ${message.guild.name}`, iconURL: message.guild.iconURL()})
@@ -22,7 +22,7 @@ module.exports = {
       embeds: [new MessageEmbed()
         .setThumbnail(`https://img.youtube.com/vi/${player.queue.current.identifier}/mqdefault.jpg`)
         .setURL(player.queue.current.uri)
-        .setColor(client.ee.color)
+        .setColor(client.embed.color)
         .setTitle(`${player.queue.current.title}`)
         .addField(`Duration:`, `\`${format(player.queue.current.duration)}\``, true)
         .addField(`Author`, `\`${player.queue.current.author}\``, true)

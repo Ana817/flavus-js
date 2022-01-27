@@ -4,7 +4,6 @@ module.exports = async (client, channel) => {
       var player = client.manager.players.get(channel.guild.id);
       if (!player) return;
       if (channel.id === player.voiceChannel) {
-        //destroy
         player.destroy();
       }
     }

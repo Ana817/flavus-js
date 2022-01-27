@@ -8,9 +8,9 @@ module.exports = (client) => {
       autoIndex: false,
     })
     .then(() => {
-      client.clog("Connected to MongoDB!".log);
+      client.logger("Connected to MongoDB!".log);
     })
     .catch((err) => {
-      client.clog("Error connecting to MongoDB: ".error + String(err.message).error);
+      client.logger("Error connecting to MongoDB: ".error + String(err.message).error);
     });
 };

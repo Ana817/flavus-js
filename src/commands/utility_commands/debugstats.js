@@ -2,18 +2,18 @@ const { MessageEmbed } = require("discord.js");
 const { MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
-  name: "debug",
+  name: "debugstats",
   description: "Debug command",
   usage: `none`,
   player: false,
   visible: false,
   async execute(client, message, args, player) {
     message.channel.send({
-      embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Gathering data...")],
+      embeds: [new MessageEmbed().setColor(client.embed.color).setTitle("Gathering data...")],
     }).then (async (msg) => {
       msg.delete()
       return message.channel.send({
-        embeds: [new MessageEmbed().setColor(client.ee.color).setTitle("Debug Embed").setDescription(`Name - \`${client.user.tag}\` - \`[${client.user.id}]\`
+        embeds: [new MessageEmbed().setColor(client.embed.color).setTitle("Debug Embed").setDescription(`Name - \`${client.user.tag}\` - \`[${client.user.id}]\`
         Latency - \`${msg.createdTimestamp - message.createdTimestamp}ms\`
         Api Latency - \`${Math.round(client.ws.ping)}ms\`
         Runtime - \`${client.toTime.fromSeconds(Math.round(client.uptime / 1000)).humanize()}\`

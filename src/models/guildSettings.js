@@ -10,6 +10,11 @@ const guildSettings = Schema({
     type: Boolean,
     default: false,
   },
+  autoresume: {
+    type: Boolean,
+    default: false,
+  },
+  timestamp: { type: Date, default: Date.now }
 });
 
 module.exports = model("guildSettings", guildSettings);
