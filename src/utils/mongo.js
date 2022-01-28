@@ -82,7 +82,7 @@ async function savePlayer(player, client) {
         } else {
             data.queue = queue;
             data.current = {
-                track: player.queue.current.track,
+                track: player.queue.current.track || null,
                 title: player.queue.current.title,
                 identifier: player.queue.current.identifier,
                 author: player.queue.current.author,

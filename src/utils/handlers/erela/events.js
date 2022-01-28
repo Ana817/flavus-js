@@ -6,13 +6,11 @@ module.exports = (client) => {
   playerintervals = new Map();
 
   const autoconnect = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     const resumeGuilds = await getAutoresume();
     resumeGuilds.forEach(async (guild) => {
+      client.logger(`Recovering player for guild - ${guild.guildID}`);
       const sPlayer = await getPlayer(guild.guildID);
-      console.log(sPlayer.timestamp);
       if (Date.now() - sPlayer.timestamp > 300000) return;
-      console.log(sPlayer.timestamp);
       //if sPlayer.queue is empty, and sPlayer.current is empty as well, don't resume
       if (sPlayer.queue.length === 0 && !sPlayer.current) return;
       //sPlayer.options.voiceChannel is voiceChannel id. check if there are any members connected to that voiceChannel

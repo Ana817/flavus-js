@@ -9,7 +9,7 @@
   "lavalink": {
     "nodes": [
         {
-        "host": "lavalink-replit.rainandrewandr1.repl.co",
+        "host": "lavalink.scpcl.site",
         "port": 443,
         "password": null,
         "secure": true
