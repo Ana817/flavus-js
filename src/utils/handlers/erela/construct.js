@@ -1,17 +1,19 @@
 var { Manager } = require("erela.js");
 var Spotify = require("erela.js-spotify");
 var Facebook = require("erela.js-facebook");
-var config = require(`${process.cwd()}/config.json`);
 
-(clientID = process.env.clientID), (clientSecret = process.env.clientSecret);
 module.exports = (client) => {
-  config.lavalink.nodes[0].password = config.lavalink.nodes[0].password || process.env.lavasecret
   client.manager = new Manager({
-    nodes: config.lavalink.nodes,
+    nodes: [{
+      host: process.env.LAVALINK_HOST,
+      port: Number(process.env.LAVALINK_PORT),
+      password: process.env.LAVALINK_PASSWORD,
+      secure: process.env.LAVALINK_SECURE === "true",
+    }],
     plugins: [
       new Spotify({
-        clientID,
-        clientSecret,
+        clientID: process.env.SPOTIFY_ID,
+        clientSecret: process.env.SPOTIFY_SECRET,
       }),
       new Facebook(),
     ],
@@ -21,7 +23,7 @@ module.exports = (client) => {
     },
   });
 
-  client.logger(`Erela initialized!`.log);
+  client.logger(`ErelaJS initialized!`.log);
 
   client.once("ready", () => {
     client.manager.init(client.user.id);

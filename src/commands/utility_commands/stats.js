@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 const { MessageActionRow, MessageButton } = require("discord.js");
 
 module.exports = {
-  name: "debugstats",
+  name: "stats",
   aliases: ["runtime"],
   description: "Debug command",
   usage: `none`,

@@ -26,13 +26,26 @@ My personal music bot powered by lavalink. Based on [discord.js](https://discord
 
 Create `.env` file or set your env variables as follows:
 ```env
-token = <YOUR_DISCORD_BOT_TOKEN>
-owner = <OWNER_DISCORD_ID>
-MONGODB_SRV = <MONGODB_SRV>
-clientID = <SPOTIFY_CLIENT_ID>
-clientSecret = <SPOTIFY_CLIENT_SECRET>
-prefix = <PREFIX> (optional)
-lavasecret = <LAVALINK_PASSWORD> (optional - you can define it in config.json)
+# Bot config
+TOKEN=<YOUR_DISCORD_BOT_TOKEN>
+OWNER=<OWNER_DISCORD_ID>
+PREFIX=<PREFIX>
+
+# Lavalink credentials
+LAVALINK_HOST=<LAVALINK_HOST>
+LAVALINK_PORT=<LAVALINK_PORT>
+LAVALINK_PASSWORD=<LAVALINK_PASSWORD>
+LAVALINK_SECURE=true
+
+# Mongodb config
+MONGODB_SRV=<MONGODB_SRV>
+
+# Spotify config
+SPOTIFY_ID=<SPOTIFY_CLIENT_ID>
+SPOTIFY_SECRET=<SPOTIFY_CLIENT_SECRET>
+
+# Genius credentials (optional)
+GENIUS = <GENIUS_CLIENT_ID>
 ```
 
 You can then modify the settings in the configuration file located in `config` folder `config.js`.
@@ -45,16 +58,7 @@ You can then modify the settings in the configuration file located in `config` f
     "type": "PLAYING",
     "url": "https://twitch.tv/#"
   },
-  "lavalink": {
-    "nodes": [
-        {
-          "host": "localhost",
-          "port": 80,
-          "password": "youshallnotpass",
-          "secure": false
-        }
-    ]
-  },
+  "leaveOnEmptyChannel": 300000,
   "visuals": {
     "embed": {
       "color": "#ffcc00",
@@ -75,9 +79,8 @@ You can then modify the settings in the configuration file located in `config` f
 Lot of code in this project is coming from **[discord-js-lavalink-Music-Bot-erela-js](https://github.com/Tomato6966/discord-js-lavalink-Music-Bot-erela-js)** coded by **[Tomato#6966](https://github.com/Tomato6966)**.
 
 ## TODO
-- [ ] Add more commands
 - [x] Add option to create and save playlists
-- [ ] Disconnect from voice channel when its empty
+- [x] Disconnect from voice channel when its empty
 - [ ] Rework all embeds
 - [ ] Clean up code
 

@@ -6,16 +6,6 @@
     "url": "https://twitch.tv/#"
   },
   "leaveOnEmptyChannel": 300000,
-  "lavalink": {
-    "nodes": [
-        {
-        "host": "lavalink.scpcl.site",
-        "port": 443,
-        "password": null,
-        "secure": true
-        }
-    ]
-  },
   "visuals": {
     "embed": {
       "color": "#ffcc00",
