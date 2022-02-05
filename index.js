@@ -31,4 +31,4 @@ Array("events", "commands", "erela", "errorEvent", "loadMongo").forEach((handler
   }
 });
 
-client.login(process.env.token || client.config.token);
+client.login(process.env.TOKEN || client.config.token);

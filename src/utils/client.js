@@ -12,7 +12,7 @@ module.exports = client => {
     client.discordTogether = new DiscordTogether(client); // Discord Together
 
     if (process.env.GENIUS) {
-        client.lyrics = new Genius.Client(process.env.genius);
+        client.lyrics = new Genius.Client(process.env.GENIUS);
     } else {
         client.lyrics = new Genius.Client();
     }

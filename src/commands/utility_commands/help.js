@@ -31,7 +31,7 @@ module.exports = {
         .setColor(client.embed.color)
         .setTitle("HELP")
         .setDescription(
-          `${process.env.prefix}help (cmd name), display the help for a specific command`
+          `${process.env.PREFIX}help (cmd name), display the help for a specific command`
         );
       let array = [];
       for (let [key, value] of client.commands) {
