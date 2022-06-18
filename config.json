@@ -5,7 +5,7 @@
     "type": "PLAYING",
     "url": "https://twitch.tv/#"
   },
-  "leaveOnEmptyChannel": 300000,
+  "leaveOnEmptyChannel": 999999,
   "visuals": {
     "embed": {
       "color": "#ffcc00",
